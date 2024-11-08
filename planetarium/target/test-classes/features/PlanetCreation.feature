@@ -30,8 +30,7 @@ Feature: PlanetCreation
 		| https://localhost:8080 | Batman   | I am the night | (empty)                         | User receives a notification that planet creation with their planet's name has failed | C:/path/Celestial Images/planet-1.jpeg  |
 		| https://localhost:8080 | Batman   | I am the night | a                               | Planet is created and the user's table is refreshed to display new planet             | C:/path/Celestial Images/planet-1.jpeg  |
 		| https://localhost:8080 | Batman   | I am the night | Do not listen to the Narrator!  | Planet is created and the user's table is refreshed to display new planet             | C:/path/Celestial Images/planet-1.jpeg  |
-		| https://localhost:8080 | Batman   | I am the night | I am the Narrator of this story | User receives a notification that planet creation with their planet's name has failed | C:/path
-/Celestial Images/planet-1.jpeg |
+		| https://localhost:8080 | Batman   | I am the night | I am the Narrator of this story | User receives a notification that planet creation with their planet's name has failed | C:/path/Celestial Images/planet-1.jpeg |
 
 	@PLAN-TC-48 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
 	Scenario Outline: Planet Creation: Planets can only be created with unique names
