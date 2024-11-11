@@ -9,7 +9,7 @@ Feature: MoonCreation
 		When the user inputs moon "<Moon name>" into Moon Name Input textbox
 		When the user inputs Planet ID <PlanetID>
 		When the user attaches <Moon image>
-		When the user clicks "Submit Moon"
+		When the user clicks Submit Moon
 		Then the user should see "<Result>"
 			"""
 			"<Moon name>"
@@ -34,7 +34,7 @@ Feature: MoonCreation
 		When the user inputs moon "<Moon name>" into Moon Name Input textbox
 		When the user inputs Planet ID <PlanetID>
 		When the user attaches <Moon image>
-		When the user clicks "Submit Moon"
+		When the user clicks submit moon
 		Then the user should see "<Result>"
 			"""
 			"<Moon name>"
@@ -60,7 +60,7 @@ Feature: MoonCreation
 		When the user inputs moon "<Moon name>" into Moon Name Input textbox
 		When the user inputs Planet ID <PlanetID>
 		When the user attaches <Moon image>
-		When the user clicks "Submit Moon"
+		When the user clicks submit moon
 		Then the user should see "<Result>"
 			"""
 			<Planet ID>, "<Moon Name>"
@@ -80,7 +80,7 @@ Feature: MoonCreation
 		When the user inputs moon "<Moon name>" into Moon Name Input textbox
 		When the user inputs Planet ID <PlanetID>
 		When the user attaches <Moon image>
-		When the user clicks "Submit Moon"
+		When the user clicks submit moon
 		Then the user should see that moon created is <Moon Created?>
 
 	Examples: 
@@ -97,7 +97,7 @@ Feature: MoonCreation
 		When the user inputs moon "<Moon name>" into Moon Name Input textbox
 		When the user inputs Planet ID <PlanetID>
 		When the user attaches <Moon image>
-		When the user clicks "Submit Moon"
+		When the user clicks submit moon
 		When the user should see the moon created is <Moon Created?>
 		When the user clicks on the "Logout" button
 		When The user clicks on the Create Account button
