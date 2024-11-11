@@ -38,6 +38,7 @@ public class TestRunner {
 
     @BeforeClass
     public static void setup() {
+        Setup.main(new String[]{});
         driver = new ChromeDriver();
         loginPage = new LoginPage(driver);
         registrationPage = new RegistrationPage(driver);
@@ -49,11 +50,6 @@ public class TestRunner {
     @AfterClass
     public static void teardown() {
         if(driver != null) driver.quit();
-    }
-
-    @Before
-    public static void setupForEach() {
-        Setup.main(new String[]{});
     }
 
 }

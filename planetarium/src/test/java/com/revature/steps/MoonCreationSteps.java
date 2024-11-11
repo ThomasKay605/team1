@@ -1,6 +1,7 @@
 package com.revature.steps;
 
 import com.revature.TestRunner;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Given;
@@ -33,12 +34,6 @@ public class MoonCreationSteps {
 
     @Then("the user should see that moon created is <Moon Created?>")
     public void the_user_should_see_that_moon_created_is_Moon_Created(String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @When("the user inputs Planet ID <PlanetID>")
-    public void the_user_inputs_Planet_ID_PlanetID() {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
@@ -173,6 +168,10 @@ public class MoonCreationSteps {
     @When("the user clicks submit moon")
     public void theUserClicksSubmitMoon() {
         TestRunner.homePage.pressSubmitButton();
+    }
+
+    @And("the user should see that the moon {string} visibility is <Moon Visible to Nonowner?>")
+    public void theUserShouldSeeThatTheMoonVisibilityIsMoonVisibleToNonowner(String arg0) {
     }
 
 }
