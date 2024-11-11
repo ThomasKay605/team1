@@ -165,7 +165,7 @@ public class MoonCreationSteps {
     }
 
     @Then("the user should see that the moon {string} visibility is <Moon visible to nonowner>")
-    public void the_user_should_see_that_the_moon_visibility_is_Moon_visible_to_nonowner(String string) {
+    public void the_user_should_see_that_the_moon_visibility_is_Moon_visible_to_nonowner(String moonName, boolean isVisible) {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
