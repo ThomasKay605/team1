@@ -43,3 +43,27 @@ to see their own celestial bodies. We confirmed with the stakeholder that it is 
 **Blockers**: No blockers
 
 ### *Friday, November 8th, 2024*
+**Goal**: Start implementing peer programming during our STLC development process
+
+**Discussion**: Checked in with stakeholder and received feedback regarding our progress. Stakeholder mentioned for us to
+update the JIRA board as well as implement peer programming. We are on-time with our deliverables. *No blockers.*
+
+**Accomplishments**: Peer programmed all feature files; finished the POM for the Login and Registration page and started the 
+POM for the Home Page. Drivers today were MF, TK, and II.
+
+### *Monday, November 11th, 2024*
+**Goal**: Finish writing our respective step implementations by Wednesday 11/13/24
+
+**Discussion**: Discussed what we have left to write before we can move forward with writing step implementation.
+We still need to finish the POM for the Home Page as well as the test runner files. *No blockers.*
+
+**Accomplishments**: Finished writing Home page POM and Test Runner files through peer programming. HN and TK drove the
+programming.
+
+**Moving Forward**:
+- TK: Start writing Registration step implementation
+- HN: Start writing Viewable Planetarium step implementation
+- II: Scrum notes + Planet step implementation
+- MF: Start writing Moon step implementation
+
+### *Tuesday, November 12th, 2024*
