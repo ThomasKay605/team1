@@ -5,14 +5,8 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Given;
 
 public class PlanetCreationSteps {
-    @When("The user clicks on the dropdown")
-    public void the_user_clicks_on_the_dropdown() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @When("The user selects Planet")
-    public void the_user_selects_Planet() {
+    @When("The user clicks on the dropdown and selects Planet")
+    public void the_user_clicks_on_the_dropdown_and_selects_Planet() {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
@@ -23,14 +17,8 @@ public class PlanetCreationSteps {
         throw new io.cucumber.java.PendingException();
     }
 
-    @Then("The user clicks on the file upload button")
-    public void the_user_clicks_on_the_file_upload_button() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @Then("The user uploads an image {string}")
-    public void the_user_uploads_an_image(String string, String docString) {
+    @Then("The user clicks on the file upload button and uploads an image {string}")
+    public void the_user_clicks_on_the_file_upload_button_and_uploads_an_image(String string, String docString) {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
@@ -41,8 +29,20 @@ public class PlanetCreationSteps {
         throw new io.cucumber.java.PendingException();
     }
 
+    @Then("the user should see {string}")
+    public void the_user_should_see(String string, String docString) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
     @Given("The user has created a new planet with the name {string} and the file path {string}")
     public void the_user_has_created_a_new_planet_with_the_name_and_the_file_path(String string, String string2, String docString) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
+    @When("the user clicks on the {string} button")
+    public void the_user_clicks_on_the_button(String string) {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
@@ -65,8 +65,14 @@ public class PlanetCreationSteps {
         throw new io.cucumber.java.PendingException();
     }
 
+    @When("The user clicks on the Create Account button")
+    public void the_user_clicks_on_the_Create_Account_button() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
     @Then("The user goes back to the login screen")
-    public void the_user_goes_back_to_the_login_screen(String docString) {
+    public void the_user_goes_back_to_the_login_screen() {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
