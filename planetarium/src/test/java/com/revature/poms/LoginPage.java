@@ -11,6 +11,8 @@ public class LoginPage {
 
     public static final String LOGIN_URL = "http://localhost:8080/";
 
+    public static final String ERROR_MESSAGE = "login attempt failed: please try again";
+
     @FindBy(id = "usernameInput")
     private WebElement usernameInput;
 
