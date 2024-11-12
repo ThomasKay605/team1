@@ -2,11 +2,14 @@ package com.revature.poms;
 
 import java.util.List;
 
+import com.revature.TestRunner;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 // Good enough for now
@@ -18,6 +21,7 @@ public class HomePage {
     @FindBy(id = "logoutButton")
     private WebElement logoutButton;
 
+    // does not work for Select
     @FindBy(id = "locationSelect")
     private Select moonOrPlanet;
 
@@ -64,10 +68,12 @@ public class HomePage {
     }
 
     public void changeToMoon(){
+        moonOrPlanet = new Select(driver.findElement(By.id("locationSelect")));
         moonOrPlanet.selectByVisibleText("Moon");
     }
 
     public void changeToPlanet(){
+        moonOrPlanet = new Select(driver.findElement(By.id("locationSelect")));
         moonOrPlanet.selectByVisibleText("Planet");
     }
 
@@ -138,5 +144,10 @@ public class HomePage {
             }
         }
         return false;
+    }
+
+    public String getAlertText() {
+        TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
+        return TestRunner.driver.switchTo().alert().getText();
     }
 }

@@ -19,7 +19,7 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         glue = "com.revature.steps",
-        features = "classpath:features",
+        features = "classpath:features/MoonDeletion.feature",
         plugin = {"pretty","json:src/test/resources/json-report.json", "html:/src/test/resources/html-report.html"}
 )
 public class TestRunner {

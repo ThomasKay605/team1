@@ -5,12 +5,16 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Given;
+import org.junit.Assert;
+
+import javax.swing.*;
 
 public class MoonCreationSteps {
 
 
     @When("the user has enabled the Moon tag on the home page")
     public void the_user_has_enabled_the_Moon_tag_on_the_home_page() {
+
         TestRunner.homePage.changeToPlanet();
         // have to switch back and forth in order to work
         TestRunner.homePage.changeToMoon();
@@ -19,17 +23,6 @@ public class MoonCreationSteps {
     @When("the user inputs moon {string} into Moon Name Input textbox")
     public void the_user_inputs_moon_into_Moon_Name_Input_textbox(String moonName) {
         TestRunner.homePage.addingMoonName(moonName);
-    }
-
-    /**
-     *
-     * @param string
-     * @param docString
-     */
-    @Then("the user should see {string}")
-    public void the_user_should_see(String string, String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
     }
 
     @Then("the user should see that moon created is <Moon Created?>")

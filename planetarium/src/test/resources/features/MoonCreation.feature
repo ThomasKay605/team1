@@ -12,7 +12,7 @@ Feature: MoonCreation
 		When the user clicks Submit Moon
 		Then the user should see "<Result>"
 			"""
-			"<Moon name>"
+			"<Moon name>, <Planet ID>"
 			"""
 		Then the user should see that moon created is <Moon created?>
 			"""
