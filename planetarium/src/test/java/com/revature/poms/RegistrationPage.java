@@ -44,4 +44,8 @@ public class RegistrationPage {
     public void goBackToLoginScreen() {
         driver.navigate().back();
     }
+
+    public boolean isPasswordInvisible() {
+        return passwordInput.getAttribute("type").equals("password");
+    }
 }

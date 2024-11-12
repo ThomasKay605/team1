@@ -54,4 +54,8 @@ public class LoginPage {
         // this.driver.navigate.to(registerLink);
     }
 
+    public boolean isPasswordInvisible() {
+        return this.passwordInput.getAttribute("type").equals("password");
+    }
+
 }

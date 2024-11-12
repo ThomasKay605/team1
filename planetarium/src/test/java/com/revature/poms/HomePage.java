@@ -9,7 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -57,11 +56,9 @@ public class HomePage {
     //@FindBy(className = "submit-button")
     private WebElement createButton;
 
+    // Keep?
     @FindBy(xpath = "//tr")
     private List<WebElement> rows;
-
-    // Rename to rows
-    private List<CelestialBody> rowss;
 
     private WebDriver driver;
 
@@ -79,7 +76,8 @@ public class HomePage {
     }
 
     public void changeToMoon(){
-        moonOrPlanet.selectByVisibleText("Moon");
+        //moonOrPlanet.selectByVisibleText("Moon");
+        moonOrPlanet.selectByValue(CelestialType.MOON.getType());
         this.changeToMoonHelper();
     }
 
@@ -99,7 +97,7 @@ public class HomePage {
     }
 
     public void changeToPlanet(){
-        moonOrPlanet.selectByVisibleText("Planet");
+        moonOrPlanet.selectByValue(CelestialType.PLANET.getType());
         this.changeToPlanetHelper();
     }
 
@@ -121,7 +119,6 @@ public class HomePage {
 
     public void pressDelete(){
         this.deleteButton.click();
-        this.onUpdateTable();
     }
 
     public void addingPlanetName(String celestialName){
@@ -137,7 +134,7 @@ public class HomePage {
     }
 
     public void addingMoonImage(String filepath){
-        moonNameInput.sendKeys(filepath);
+        moonImageInput.sendKeys(filepath);
     }
 
     public void addingPlanetID(String id){
@@ -146,7 +143,6 @@ public class HomePage {
 
     public void pressSubmitButton(){
         createButton.click();
-        this.onUpdateTable();
     }
 
     public List<WebElement> getTable(){
@@ -186,20 +182,20 @@ public class HomePage {
         return false;
     }
 
-    private void onUpdateTable() {
-        this.rowss = new ArrayList<>();
-        List<WebElement> tableRows = this.driver.findElements(
-            By.xpath("//*[@id='celestialTable']/tbody/tr[position()>1]"));
-        for(WebElement row : tableRows) {
-            CelestialBody entity;
-            CelestialType type = CelestialType.getCelestialType(
-                row.findElement(By.xpath("//td[1]")).getText());
-            int id = Integer.parseInt(row.findElement(By.xpath("//td[2]")).getText());
-            String name = row.findElement(By.xpath("//td[3]")).getText();
-            int ownerId = Integer.parseInt(row.findElement(By.xpath("//td[4]")).getText());
-            String imgPath = row.findElement(By.xpath("//td[5]")).getAttribute("src");
-            entity = new CelestialBody(type, id, name, ownerId, imgPath);
-            this.rowss.add(entity);
+    public List<CelestialBody> getTableRows() {
+        List<CelestialBody> celestialBodies = new ArrayList<>();
+        List<WebElement> table = new WebDriverWait(this.driver, Duration.ofSeconds(WAIT)).until(
+            ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//tr[position()>1]"))
+        );
+        for(WebElement row : table) {
+            List<WebElement> attributes = row.findElements(By.tagName("td"));
+            CelestialType type = CelestialType.getCelestialType(attributes.get(0).getText());
+            int id = Integer.parseInt(attributes.get(1).getText());
+            String name = attributes.get(2).getText();
+            int ownerId = Integer.parseInt(attributes.get(3).getText());
+            String imgPath = attributes.get(4).getAttribute("src");
+            celestialBodies.add(new CelestialBody(type, id, name, ownerId, imgPath));
         }
+        return celestialBodies;
     }
 }
