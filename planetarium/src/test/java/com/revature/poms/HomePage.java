@@ -1,10 +1,9 @@
 package com.revature.poms;
 
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.revature.TestRunner;
-import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,17 +11,24 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.revature.model.CelestialBody;
+import com.revature.model.CelestialType;
 
 // Good enough for now
 public class HomePage {
     
+    private static final int WAIT = 2;
+
+    public static final String TITLE = "Home";
+
     @FindBy(id = "greeting")
     private WebElement greetings;
 
     @FindBy(id = "logoutButton")
     private WebElement logoutButton;
 
-    // does not work for Select
     @FindBy(id = "locationSelect")
     private Select moonOrPlanet;
 
@@ -32,24 +38,25 @@ public class HomePage {
     @FindBy(id = "deleteButton")
     private WebElement deleteButton;
 
-    @FindBy(id = "planetNameInput")
+    //@FindBy(id = "planetNameInput")
     private WebElement planetNameInput;
 
-    @FindBy(id = "planetImageInput")
+    //@FindBy(id = "planetImageInput")
     private WebElement planetImageInput;
 
-    @FindBy(id = "moonNameInput")
+    //@FindBy(id = "moonNameInput")
     private WebElement moonNameInput;
 
-    @FindBy(id = "orbitedPlanetInput")
+    //@FindBy(id = "orbitedPlanetInput")
     private WebElement orbitedPlanetInput;
 
-    @FindBy(id = "moonImageInput")
+    //@FindBy(id = "moonImageInput")
     private WebElement moonImageInput;
 
-    @FindBy(className = "submit-button")
+    //@FindBy(className = "submit-button")
     private WebElement createButton;
 
+    // Keep?
     @FindBy(xpath = "//tr")
     private List<WebElement> rows;
 
@@ -69,13 +76,43 @@ public class HomePage {
     }
 
     public void changeToMoon(){
+        //moonOrPlanet.selectByVisibleText("Moon");
         moonOrPlanet = new Select(driver.findElement(By.id("locationSelect")));
-        moonOrPlanet.selectByVisibleText("Moon");
+        moonOrPlanet.selectByValue(CelestialType.MOON.getType());
+        this.changeToMoonHelper();
+    }
+
+    private void changeToMoonHelper() {
+        this.moonNameInput = new WebDriverWait(this.driver, Duration.ofSeconds(WAIT)).until(
+            ExpectedConditions.visibilityOfElementLocated(By.id("moonNameInput"))
+        );
+        this.moonImageInput = new WebDriverWait(this.driver, Duration.ofSeconds(WAIT)).until(
+            ExpectedConditions.visibilityOfElementLocated(By.id("moonImageInput"))
+        );
+        this.orbitedPlanetInput = new WebDriverWait(this.driver, Duration.ofSeconds(WAIT)).until(
+            ExpectedConditions.visibilityOfElementLocated(By.id("orbitedPlanetInput"))
+        );
+        this.createButton = new WebDriverWait(this.driver, Duration.ofSeconds(WAIT)).until(
+            ExpectedConditions.elementToBeClickable(By.className("submit-button"))
+        );
     }
 
     public void changeToPlanet(){
         moonOrPlanet = new Select(driver.findElement(By.id("locationSelect")));
-        moonOrPlanet.selectByVisibleText("Planet");
+        moonOrPlanet.selectByValue(CelestialType.PLANET.getType());
+        this.changeToPlanetHelper();
+    }
+
+    private void changeToPlanetHelper() {
+        this.planetNameInput = new WebDriverWait(this.driver, Duration.ofSeconds(WAIT)).until(
+            ExpectedConditions.visibilityOfElementLocated(By.id("planetNameInput"))
+        );
+        this.planetImageInput = new WebDriverWait(this.driver, Duration.ofSeconds(WAIT)).until(
+            ExpectedConditions.visibilityOfElementLocated(By.id("planetImageInput"))
+        );
+        this.createButton = new WebDriverWait(this.driver, Duration.ofSeconds(WAIT)).until(
+            ExpectedConditions.elementToBeClickable(By.className("submit-button"))  
+        );
     }
 
     public void deleteCelestial(String celestialName){
@@ -99,7 +136,7 @@ public class HomePage {
     }
 
     public void addingMoonImage(String filepath){
-        moonNameInput.sendKeys(filepath);
+        moonImageInput.sendKeys(filepath);
     }
 
     public void addingPlanetID(String id){
@@ -147,11 +184,30 @@ public class HomePage {
         return false;
     }
 
-    public String getAlertText() {
+    public List<CelestialBody> getTableRows() {
+        List<CelestialBody> celestialBodies = new ArrayList<>();
+        List<WebElement> table = new WebDriverWait(this.driver, Duration.ofSeconds(WAIT)).until(
+            ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//tr[position()>1]"))
+        );
+        for(WebElement row : table) {
+            List<WebElement> attributes = row.findElements(By.tagName("td"));
+            CelestialType type = CelestialType.getCelestialType(attributes.get(0).getText());
+            int id = Integer.parseInt(attributes.get(1).getText());
+            String name = attributes.get(2).getText();
+            int ownerId = Integer.parseInt(attributes.get(3).getText());
+            String imgPath = attributes.get(4).getAttribute("src");
+            celestialBodies.add(new CelestialBody(type, id, name, ownerId, imgPath));
+        }
+        return celestialBodies;
+    }
+   
+     // does not work as expected 
+     public String getAlertText() {
         TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
         return TestRunner.driver.switchTo().alert().getText();
     }
 
+   // does not work as expected 
     public void closeAlert() {
         Alert alert = TestRunner.driver.switchTo().alert();
         alert.accept();

@@ -19,7 +19,7 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         glue = "com.revature.steps",
-        features = "classpath:features/MoonDeletion.feature",
+        features = "classpath:features",
         plugin = {"pretty","json:src/test/resources/json-report.json", "html:/src/test/resources/html-report.html"}
 )
 public class TestRunner {
@@ -38,7 +38,6 @@ public class TestRunner {
 
     @BeforeClass
     public static void setup() {
-        Setup.main(new String[]{});
         driver = new ChromeDriver();
         loginPage = new LoginPage(driver);
         registrationPage = new RegistrationPage(driver);

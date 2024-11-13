@@ -8,14 +8,12 @@ Feature: PlanetCreation
 			"""
 			"<Username>", "<Password>", "<Host>"
 			"""
-		When The user clicks on the dropdown
-		And The user selects Planet
+		When The user clicks on the dropdown and selects Planet
 		Then The user inputs the Planet name "<Planet name>"
 			"""
 			"<Planet name>"
 			"""
-		And The user clicks on the file upload button
-		And The user uploads an image "<Path to File>"
+		And The user clicks on the file upload button and uploads an image "<Path to File>"
 			"""
 			"<Path to File>"
 			"""
@@ -25,12 +23,12 @@ Feature: PlanetCreation
 			"<Result>"
 			"""
 
-	Examples: 
-		| Host                   | Username | Password       | Planet name                     | Result                                                                                | Path to File                            |
-		| https://localhost:8080 | Batman   | I am the night | (empty)                         | User receives a notification that planet creation with their planet's name has failed | C:/path/Celestial Images/planet-1.jpeg  |
-		| https://localhost:8080 | Batman   | I am the night | a                               | Planet is created and the user's table is refreshed to display new planet             | C:/path/Celestial Images/planet-1.jpeg  |
-		| https://localhost:8080 | Batman   | I am the night | Do not listen to the Narrator!  | Planet is created and the user's table is refreshed to display new planet             | C:/path/Celestial Images/planet-1.jpeg  |
-		| https://localhost:8080 | Batman   | I am the night | I am the Narrator of this story | User receives a notification that planet creation with their planet's name has failed | C:/path/Celestial Images/planet-1.jpeg |
+		Examples:
+			| Host                   | Username | Password       | Planet name                     | Result                                                                                | Path to File |
+			| https://localhost:8080 | Batman   | I am the night | (empty)                         | User receives a notification that planet creation with their planet's name has failed | PLANET_PATH  |
+			| https://localhost:8080 | Batman   | I am the night | a                               | Planet is created and the user's table is refreshed to display new planet             | PLANET_PATH  |
+			| https://localhost:8080 | Batman   | I am the night | Do not listen to the Narrator!  | Planet is created and the user's table is refreshed to display new planet             | PLANET_PATH  |
+			| https://localhost:8080 | Batman   | I am the night | I am the Narrator of this story | User receives a notification that planet creation with their planet's name has failed | PLANET_PATH  |
 
 	@PLAN-TC-48 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
 	Scenario Outline: Planet Creation: Planets can only be created with unique names
@@ -39,14 +37,12 @@ Feature: PlanetCreation
 			"""
 			"<Host>", "<Username>", "<Password>"
 			"""
-		When The user clicks on the dropdown
-		And The user selects Planet
+		When The user clicks on the dropdown and selects Planet
 		Then The user inputs the Planet name "<Planet name>"
 			"""
 			"<Planet Name>"
 			"""
-		And The user clicks on the file upload button
-		And The user uploads an image "<Path to File>"
+		And The user clicks on the file upload button and uploads an image "<Path to File>"
 			"""
 			"<Path to File>"
 			"""
@@ -56,26 +52,24 @@ Feature: PlanetCreation
 			"<Result>"
 			"""
 
-	Examples: 
-		| Host                   | Username | Password       | Planet Name | Result                                                                                | Path to File                           |
-		| https://localhost:8080 | Batman   | I am the night | Venus       | Planet is created and the user's table is refreshed to display new planet             | C:/path/Celestial Images/planet-3.jpeg |
-		| https://localhost:8080 | Batman   | I am the night | Mars        | User receives a notification that planet creation with their planet's name has failed | C:/path/Celestial Images/planet-3.jpeg |
+		Examples:
+			| Host                   | Username | Password       | Planet Name | Result                                                                                | Path to File |
+			| https://localhost:8080 | Batman   | I am the night | Venus       | Planet is created and the user's table is refreshed to display new planet             | PLANET_PATH  |
+			| https://localhost:8080 | Batman   | I am the night | Mars        | User receives a notification that planet creation with their planet's name has failed | PLANET_PATH  |
 
 	@PLAN-TC-49 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
 	Scenario Outline: Planet Creation: Planets can be created with uploaded images from an user or with not image required
 	Automated test case to check if a user can create a planet with or without an associated image (Error Guess testing).
 		Given The user has logged into the planetarium and is on the Home Page
 			"""
-			"<Valid Username>", "<Valid Password>"
+			"<Home page>", "<Valid Username>", "<Valid Password>"
 			"""
-		When The user clicks on the dropdown
-		And The user selects Planet
+		When The user clicks on the dropdown and selects Planet
 		Then The user inputs the Planet name "<Planet name>"
 			"""
 			"<Planet name>"
 			"""
-		And The user clicks on the file upload button
-		And The user uploads an image "<Path to File>"
+		And The user clicks on the file upload button and uploads an image "<Path to File>"
 			"""
 			"<Path to File>"
 			"""
@@ -85,18 +79,18 @@ Feature: PlanetCreation
 			"<Planet result>"
 			"""
 
-	Examples: 
-		| Home page                         | Planet name | Path to File                           | Planet result                                                      | Valid Username | Valid Password |
-		| https://localhost:8080/plantarium | Neptune     | C:/path/Celestial Images/planet-5.jpeg | The new planet can be seen with the associated image with it       | Batman         | I am the night |
-		| https://localhost:8080/plantarium | Uranus      | C:/path/Celestial Images/planet-7.png  | The new planet can be seen with the associated image with it       | Batman         | I am the night |
-		| https://localhost:8080/plantarium | Pluto       | (empty)                                | The new planet can be seen with a default image associated with it | Batman         | I am the night |
+		Examples:
+			| Home page                          | Planet name | Path to File | Planet result                                                      | Valid Username | Valid Password |
+			| https://localhost:8080/planetarium | Neptune     | PLANET_PATH  | The new planet can be seen with the associated image with it       | Batman         | I am the night |
+			| https://localhost:8080/planetarium | Uranus      | PLANET_PATH  | The new planet can be seen with the associated image with it       | Batman         | I am the night |
+			| https://localhost:8080/planetarium | Pluto       | PLANET_PATH  | The new planet can be seen with a default image associated with it | Batman         | I am the night |
 
 	@PLAN-TC-50 @JREQ-PLAN-11 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
 	Scenario Outline: Planet Creation: Planet created should be only visible to the user that created the planet
 	Automated test case to see if a newly created planet is only visible to the owner of the planet and to no one else (Error Guess testing).
 		Given The user has logged into the planetarium and is on the Home Page
 			"""
-			"<Valid Username>", "<Valid Password>"
+			"<Host>", "<Valid Username>", "<Valid Password>"
 			"""
 		And The user has created a new planet with the name "<New planet>" and the file path "<Path to File>"
 			"""
@@ -114,9 +108,6 @@ Feature: PlanetCreation
 			"""
 		When The user clicks on the Create Account button
 		Then The user goes back to the login screen
-			"""
-			"<Host>"
-			"""
 		And The user inputs their username "<New Username>" and password "<New Password>" and logs in
 			"""
 			"<New Username>", "<New Password>"
@@ -126,6 +117,6 @@ Feature: PlanetCreation
 			"<New planet>"
 			"""
 
-	Examples: 
-		| Host           | New planet | New Username | New Password | Valid Username | Valid Password | Path to File                           |
-		| localhost:8080 | Venus      | Toby         | Butter       | Batman         | I am the night | C:/path/Celestial Images/planet-1.jpeg |
+		Examples:
+			| Host           | New planet | New Username | New Password | Valid Username | Valid Password | Path to File |
+			| localhost:8080 | Venus      | Toby         | Butter       | Batman         | I am the night | PLANET_PATH  |

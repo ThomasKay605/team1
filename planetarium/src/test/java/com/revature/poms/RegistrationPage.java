@@ -7,6 +7,10 @@ import org.openqa.selenium.support.PageFactory;
 
 public class RegistrationPage {
 
+    public static final String SUCCESS_MESSAGE = "Account created successfully with username ";
+
+    public static final String FAIL_MESSAGE = "Account creation failed with username ";
+
     @FindBy(id = "usernameInput")
     private WebElement usernameInput;
 
@@ -39,5 +43,9 @@ public class RegistrationPage {
     // Filler step for other tests, subject to be removed in "future implementations"
     public void goBackToLoginScreen() {
         driver.navigate().back();
+    }
+
+    public boolean isPasswordInvisible() {
+        return passwordInput.getAttribute("type").equals("password");
     }
 }
