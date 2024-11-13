@@ -51,9 +51,4 @@ public class TestRunner {
         if(driver != null) driver.quit();
     }
 
-    @Before
-    public static void setupForEach() {
-        Setup.main(new String[]{});
-    }
-
 }
