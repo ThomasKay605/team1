@@ -11,6 +11,8 @@ public class RegistrationPage {
 
     public static final String FAIL_MESSAGE = "Account creation failed with username ";
 
+    public static final String TITLE = "Account Creation";
+
     @FindBy(id = "usernameInput")
     private WebElement usernameInput;
 
