@@ -1,45 +1,32 @@
 package com.revature.steps;
 
+import com.revature.TestRunner;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Given;
+import org.junit.Assert;
+
+import javax.swing.*;
 
 public class MoonCreationSteps {
 
 
     @When("the user has enabled the Moon tag on the home page")
     public void the_user_has_enabled_the_Moon_tag_on_the_home_page() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+
+        TestRunner.homePage.changeToPlanet();
+        // have to switch back and forth in order to work
+        TestRunner.homePage.changeToMoon();
     }
 
     @When("the user inputs moon {string} into Moon Name Input textbox")
-    public void the_user_inputs_moon_into_Moon_Name_Input_textbox(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-
-    @When("the user clicks {string}")
-    public void the_user_clicks(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @Then("the user should see {string}")
-    public void the_user_should_see(String string, String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void the_user_inputs_moon_into_Moon_Name_Input_textbox(String moonName) {
+        TestRunner.homePage.addingMoonName(moonName);
     }
 
     @Then("the user should see that moon created is <Moon Created?>")
     public void the_user_should_see_that_moon_created_is_Moon_Created(String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @When("the user inputs Planet ID <PlanetID>")
-    public void the_user_inputs_Planet_ID_PlanetID() {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
@@ -104,8 +91,6 @@ public class MoonCreationSteps {
         throw new io.cucumber.java.PendingException();
     }
 
-
-
     @When("the user attaches realistic-moon.png")
     public void the_user_attaches_realistic_moon_png() {
         // Write code here that turns the phrase above into concrete actions
@@ -168,9 +153,18 @@ public class MoonCreationSteps {
     }
 
     @Then("the user should see that the moon {string} visibility is <Moon visible to nonowner>")
-    public void the_user_should_see_that_the_moon_visibility_is_Moon_visible_to_nonowner(String string) {
+    public void the_user_should_see_that_the_moon_visibility_is_Moon_visible_to_nonowner(String moonName, boolean isVisible) {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
+    }
+
+    @When("the user clicks submit moon")
+    public void theUserClicksSubmitMoon() {
+        TestRunner.homePage.pressSubmitButton();
+    }
+
+    @And("the user should see that the moon {string} visibility is <Moon Visible to Nonowner?>")
+    public void theUserShouldSeeThatTheMoonVisibilityIsMoonVisibleToNonowner(String arg0) {
     }
 
 }
