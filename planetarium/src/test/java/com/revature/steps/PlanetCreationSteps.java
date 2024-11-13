@@ -108,4 +108,16 @@ public class PlanetCreationSteps {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
+
+    @Then("The user should see a result {string} reflected from adding a Planet")
+    public void the_user_should_see_a_result_reflected_from_adding_a_Planet(String result, String docString) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
+    @Then("The user should see a result {string} reflected from adding a Planet with an image")
+    public void the_user_should_see_a_result_reflected_from_adding_a_Planet_with_an_image(String result, String docString) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
 }
