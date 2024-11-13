@@ -8,7 +8,7 @@ Feature: UserRegistration
 		When The user clicks on the Create Account button
 		And The user registers the username "<Username>"
 		And The user registers the password "<Password>"
-		And The user's password is not visible on the text input field
+		And The user's password is not visible on the register input field
 		And The user clicks on the Create button
 		Then The user's account is "<Account Created>" via a notification
 		And The user's password "<Password>" should not be visible in the notification

@@ -2,7 +2,6 @@ package com.revature.steps;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.PendingException;
 
 public class UserLoginSteps {
@@ -66,12 +65,6 @@ public class UserLoginSteps {
     //     throw new io.cucumber.java.PendingException();
     // }
 
-    // Shared step
-    @Given("The user is on the login page {string}")
-    public void the_user_is_on_the_login_page(String hostUrl) {
-        throw new PendingException();
-    }
-
     @When("The user inputs username {string}")
     public void the_user_inputs_username(String username) {
         throw new PendingException();
@@ -82,8 +75,8 @@ public class UserLoginSteps {
         throw new PendingException();
     }
 
-    @When("The user's password is not visible on the text input field")
-    public void the_user_s_password_is_not_visible_on_the_text_input_field() {
+    @When("The user's password is not visible on the login input")
+    public void the_user_s_password_is_not_visible_on_the_login_input() {
         throw new PendingException();
     }
 

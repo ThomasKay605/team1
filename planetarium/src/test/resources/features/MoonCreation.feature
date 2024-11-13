@@ -7,24 +7,24 @@ Feature: MoonCreation
 		Given the user has logged into Planetarium and is on the home page
 		When the user has enabled the Moon tag on the home page
 		When the user inputs moon "<Moon name>" into Moon Name Input textbox
-		When the user inputs Planet ID <PlanetID>
+		When the user inputs Planet ID <Planet ID>
 		When the user attaches <Moon image>
-		When the user clicks "Submit Moon"
+		When the user clicks Submit Moon
 		Then the user should see "<Result>"
 			"""
-			"<Moon name>"
+			"<Moon name>, <Planet ID>"
 			"""
-		Then the user should see that moon created is <Moon Created?>
+		Then the user should see that moon created is <Moon created?>
 			"""
-			"<Moon name>"
+			"<Moon name>, <Planet ID>"
 			"""
 
 	Examples: 
-		| Home page                         | Moon name                       | Moon image                     | Moon created? | Result                                                              | PlanetID |
-		| https://localhost/8080/plantarium |                                 | .\Celestial Images\moon-3.jpeg | true          | no alert, table refresh                                             | 1        |
-		| https://localhost/8080/plantarium | E                               | .\Celestial Images\moon-3.jpeg | true          | no alert, table refresh                                             | 1        |
-		| https://localhost/8080/plantarium | Experiment Liquidated Embrion1  | .\Celestial Images\moon-3.jpeg | true          | no alert, table refresh                                             | 1        |
-		| https://localhost/8080/plantarium | Adamance Offensive Assurance 32 | .\Celestial Images\moon-3.jpeg | false         | Failed to create Moon orbiting planet ${PlanetID} with ${Moon name} | 1        |
+		| Home page                         | Moon name                       | Moon image                     | Moon created? | Result                                                               | Planet ID |
+		| https://localhost/8080/plantarium |                                 | .\Celestial Images\moon-3.jpeg | true          | no alert, table refresh                                              | 1         |
+		| https://localhost/8080/plantarium | E                               | .\Celestial Images\moon-3.jpeg | true          | no alert, table refresh                                              | 1         |
+		| https://localhost/8080/plantarium | Experiment Liquidated Embrion1  | .\Celestial Images\moon-3.jpeg | true          | no alert, table refresh                                              | 1         |
+		| https://localhost/8080/plantarium | Adamance Offensive Assurance 32 | .\Celestial Images\moon-3.jpeg | false         | Failed to create Moon orbiting planet ${Planet ID} with ${Moon name} | 1         |
 
 	@PLAN-TC-25 @JREQ-PLAN-14 @AIO-FOLDER-Automated/Moon_Creation
 	Scenario Outline: Moon Creation: Name of the moons have to be unique
@@ -32,9 +32,9 @@ Feature: MoonCreation
 		Given the user has logged into Planetarium and is on the home page
 		When the user has enabled the Moon tag on the home page
 		When the user inputs moon "<Moon name>" into Moon Name Input textbox
-		When the user inputs Planet ID <PlanetID>
+		When the user inputs Planet ID <Planet ID>
 		When the user attaches <Moon image>
-		When the user clicks "Submit Moon"
+		When the user clicks submit moon
 		Then the user should see "<Result>"
 			"""
 			"<Moon name>"
@@ -58,9 +58,9 @@ Feature: MoonCreation
 		When The user clicks on the Login button
 		When the user has enabled the Moon tag on the home page
 		When the user inputs moon "<Moon name>" into Moon Name Input textbox
-		When the user inputs Planet ID <PlanetID>
+		When the user inputs Planet ID <Planet ID>
 		When the user attaches <Moon image>
-		When the user clicks "Submit Moon"
+		When the user clicks submit moon
 		Then the user should see "<Result>"
 			"""
 			<Planet ID>, "<Moon Name>"
@@ -78,9 +78,9 @@ Feature: MoonCreation
 	Test case to check if a user can create a moon with or without an image associated with it (Error Guess testing).
 		Given the user has logged into Planetarium and is on the home page
 		When the user inputs moon "<Moon name>" into Moon Name Input textbox
-		When the user inputs Planet ID <PlanetID>
+		When the user inputs Planet ID <Planet ID>
 		When the user attaches <Moon image>
-		When the user clicks "Submit Moon"
+		When the user clicks submit moon
 		Then the user should see that moon created is <Moon Created?>
 
 	Examples: 
@@ -95,9 +95,9 @@ Feature: MoonCreation
 		Given the user has logged into Planetarium and is on the home page
 		When the user has enabled the Moon tag on the home page
 		When the user inputs moon "<Moon name>" into Moon Name Input textbox
-		When the user inputs Planet ID <PlanetID>
+		When the user inputs Planet ID <Planet ID>
 		When the user attaches <Moon image>
-		When the user clicks "Submit Moon"
+		When the user clicks submit moon
 		When the user should see the moon created is <Moon Created?>
 		When the user clicks on the "Logout" button
 		When The user clicks on the Create Account button
@@ -109,7 +109,7 @@ Feature: MoonCreation
 		When The user inputs password "<Password>"
 		When The user clicks on the Login button
 		Then The user should be redirected to "<https://localhost/8080/plantarium>"
-		And the user should see that the moon "<Moon name>" visibility is <Moon visible to nonowner>
+		And the user should see that the moon "<Moon name>" visibility is <Moon Visible to Nonowner?>
 
 	Examples: 
 		| Home page                         | Moon Created? | Planet ID | Image                         | Moon Visible to Nonowner? | Username | Password | Moon name |

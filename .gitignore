@@ -3,3 +3,5 @@
 /workspace.xml
 planetarium/target/*
 /.idea/*
+planetarium/.idea/
+planetarium/src/test/resources/json-report.json
