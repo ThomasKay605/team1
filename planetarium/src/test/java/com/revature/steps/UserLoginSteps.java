@@ -19,13 +19,17 @@ import io.cucumber.java.PendingException;
 
 public class UserLoginSteps {
 
+    private static final String EMPTY = "(empty)";
+
     @When("The user inputs username {string}")
     public void the_user_inputs_username(String username) {
+        if(username.equals(EMPTY)) username = "";
         TestRunner.loginPage.inputUsername(username);
     }
 
     @When("The user inputs password {string}")
     public void the_user_inputs_password(String password) {
+        if(password.equals(EMPTY)) password = "";
         TestRunner.loginPage.inputPassword(password);
     }
 
@@ -43,6 +47,7 @@ public class UserLoginSteps {
     public void the_user_should_be_and_user_s_password_is_not_visible(
         String authenticated, String password) {
         boolean isAuthenticated = (authenticated.equals("authenticated")) ? true : false;
+        if(password.equals(EMPTY)) password = "";
         if(!isAuthenticated) {
             TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
             Alert loginFail = TestRunner.driver.switchTo().alert();
@@ -124,6 +129,7 @@ public class UserLoginSteps {
     @Then("The user should be {string} with {string}")
     public void the_user_should_be_with(String onHomePage, String username) {
         boolean isOnHomePage = (onHomePage.equals("on the home page")) ? true : false;
+        if(username.equals(EMPTY)) username = "";
         String title = TestRunner.driver.getTitle();
         if(isOnHomePage) {
             Assert.assertEquals(HomePage.TITLE, title);
