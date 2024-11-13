@@ -3,6 +3,7 @@ package com.revature.poms;
 import java.util.List;
 
 import com.revature.TestRunner;
+import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -149,5 +150,10 @@ public class HomePage {
     public String getAlertText() {
         TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
         return TestRunner.driver.switchTo().alert().getText();
+    }
+
+    public void closeAlert() {
+        Alert alert = TestRunner.driver.switchTo().alert();
+        alert.accept();
     }
 }

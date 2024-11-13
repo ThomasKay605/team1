@@ -52,9 +52,19 @@ public class MoonDeletionSteps {
 
 
     @Then("the user should see {string} in moon deletion")
-    public void theUserShouldSeeInMoonDeletion(String moonName, String docString) {
-        // Failed to delete Moon with name ${name}
-        String expected = "Failed to delete Moon with name " + moonName;
+    public void theUserShouldSeeInMoonDeletion(String result, String docString) {
+        // Are we expecting an alert?
+        if (result.equals("(no alert, table refresh)")){
+            Assert.assertThrows(Exception.class, () -> TestRunner.homePage.getAlertText());
+        }
+        else {
+            String expected = "Failed to delete Moon with name " + docString;
+            String alert = TestRunner.homePage.getAlertText();
+
+            Assert.assertEquals(expected, alert);
+            TestRunner.homePage.closeAlert();
+        }
+
 
     }
 }
