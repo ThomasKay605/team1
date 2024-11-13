@@ -7,7 +7,7 @@ Feature: UserLogin
 		Given The user is on the login page "<Host>"
 		When The user inputs username "<Username>"
 		And The user inputs password "<Password>"
-		And The user's password is not visible on the text input field
+		And The user's password is not visible on the login input
 		And The user clicks on the Login button
 		Then The user should be "<Authenticated>" and user's password "<Password>" is not visible
 		And The user should be "<Redirected>" to their home page
