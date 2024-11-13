@@ -4,7 +4,7 @@ Feature: PlanetCreation
 	@PLAN-TC-41 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
 	Scenario Outline: Planet Creation: Planets should have names that are 30 characters or less
 	Automated test case checking that creating a planet is valid if the name of the planet is not empty and less than or equal to 30 characters (Boundary Analysis testing)
-		Given The user has logged into the planetarium and is on the Home Page
+		Given The user has logged into the planetarium with username "<Username>" and password "<Password>" and is on the Home Page
 			"""
 			"<Username>", "<Password>", "<Host>"
 			"""
@@ -80,10 +80,10 @@ Feature: PlanetCreation
 			"""
 
 		Examples:
-			| Home page                          | Planet name | Path to File | Planet result                                                      | Valid Username | Valid Password |
-			| https://localhost:8080/planetarium | Neptune     | PLANET_PATH  | The new planet can be seen with the associated image with it       | Batman         | I am the night |
-			| https://localhost:8080/planetarium | Uranus      | PLANET_PATH  | The new planet can be seen with the associated image with it       | Batman         | I am the night |
-			| https://localhost:8080/planetarium | Pluto       | PLANET_PATH  | The new planet can be seen with a default image associated with it | Batman         | I am the night |
+			| Home page                          | Planet name | Path to File    | Planet result                                                | Valid Username | Valid Password |
+			| https://localhost:8080/planetarium | Neptune     | PLANET_PATH     | The new planet can be seen with the associated image with it | Batman         | I am the night |
+			| https://localhost:8080/planetarium | Uranus      | PLANET_PATH_PNG | The new planet can be seen with the associated image with it | Batman         | I am the night |
+			| https://localhost:8080/planetarium | Pluto       | (empty)         | The new planet can be seen without an associated image       | Batman         | I am the night |
 
 	@PLAN-TC-50 @JREQ-PLAN-11 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
 	Scenario Outline: Planet Creation: Planet created should be only visible to the user that created the planet
@@ -96,7 +96,7 @@ Feature: PlanetCreation
 			"""
 			"<New planet>", "<Path to File>"
 			"""
-		When the user clicks on the "Logout" button
+		When the user clicks on the Logout button
 		Then The user is redirected and clicks on the Create Account button
 		And The user types a new username "<New Username>"
 			"""
