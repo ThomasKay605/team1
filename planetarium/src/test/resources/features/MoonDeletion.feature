@@ -7,8 +7,8 @@ Feature: MoonDeletion
 		Given the user has logged into Planetarium and is on the home page
 		When the user has enabled the Moon tag on the home page
 		And the user inputs moon "<Moon name>"
-		And the user clicks the "Delete" button
-		Then the user should see "<Result>"
+		And the user clicks the Delete button
+		Then the user should see "<Result>" in moon deletion
 			"""
 			"<Moon name>"
 			"""

@@ -83,6 +83,7 @@ public class HomePage {
 
     public void changeToMoon(){
         //moonOrPlanet.selectByVisibleText("Moon");
+        moonOrPlanet = new Select(driver.findElement(By.id("locationSelect")));
         moonOrPlanet.selectByValue(CelestialType.MOON.getType());
         this.changeToMoonHelper();
     }
@@ -103,6 +104,7 @@ public class HomePage {
     }
 
     public void changeToPlanet(){
+        moonOrPlanet = new Select(driver.findElement(By.id("locationSelect")));
         moonOrPlanet.selectByValue(CelestialType.PLANET.getType());
         this.changeToPlanetHelper();
     }
@@ -203,5 +205,17 @@ public class HomePage {
             celestialBodies.add(new CelestialBody(type, id, name, ownerId, imgPath));
         }
         return celestialBodies;
+    }
+   
+     // does not work as expected 
+     public String getAlertText() {
+        TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
+        return TestRunner.driver.switchTo().alert().getText();
+    }
+
+   // does not work as expected 
+    public void closeAlert() {
+        Alert alert = TestRunner.driver.switchTo().alert();
+        alert.accept();
     }
 }
