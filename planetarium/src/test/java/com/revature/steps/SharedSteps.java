@@ -1,5 +1,6 @@
 package com.revature.steps;
 
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -14,5 +15,11 @@ public class SharedSteps {
     public void the_user_has_logged_into_Planetarium_and_is_on_the_home_page() {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
+    }
+
+    // Shared step
+    @Given("The user is on the login page {string}")
+    public void the_user_is_on_the_login_page(String hostUrl) {
+        throw new PendingException();
     }
 }
