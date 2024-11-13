@@ -10,6 +10,16 @@ public class PlanetCreationSteps {
     // For empty values
     public static final String EMPTY = "empty";
 
+    //*************************************************SHARED STEP ACROSS APPLICATION*********************************************************//
+    @Given("The user has logged into the planetarium with username {string} and password {string}")
+    public void the_user_has_logged_into_the_planetarium_with_username_and_password(String username, String password, String docString) {
+        TestRunner.loginPage.getLoginPage();
+        TestRunner.loginPage.inputUsername(username);
+        TestRunner.loginPage.inputPassword(password);
+        TestRunner.loginPage.login();
+    }
+
+    // **********SHARED WITH PLANET DELETE********** //
     @When("The user clicks on the dropdown and selects Planet")
     public void the_user_clicks_on_the_dropdown_and_selects_Planet() {
         TestRunner.homePage.changeToPlanet();
@@ -39,12 +49,6 @@ public class PlanetCreationSteps {
         TestRunner.homePage.pressSubmitButton();
     }
 
-    @Then("the user should see {string}")
-    public void the_user_should_see(String string, String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
     @And("The user has created a new planet with the name {string} and the file path {string}")
     public void the_user_has_created_a_new_planet_with_the_name_and_the_file_path(String string, String string2, String docString) {
 //        TestRunner.homePage.changeToPlanet();
@@ -57,9 +61,9 @@ public class PlanetCreationSteps {
         the_user_inputs_the_Planet_name(string, "");
         the_user_clicks_on_the_file_upload_button_and_uploads_an_image(string2, "");
         the_user_clicks_on_the_Submit_Planet_button();
-
     }
 
+    //*************************************************SHARED STEP ACROSS APPLICATION*********************************************************//
     @When("the user clicks on the Logout button")
     public void the_user_clicks_on_the_Logout_button() {
         TestRunner.homePage.clickLogout();
@@ -70,16 +74,17 @@ public class PlanetCreationSteps {
         TestRunner.loginPage.goToRegister();
     }
 
-    @Then("The user types a new username {string}")
+    @And("The user types a new username {string}")
     public void the_user_types_a_new_username(String string, String docString) {
         TestRunner.registrationPage.inputUsername(string);
     }
 
-    @Then("The user types a new password {string}")
+    @And("The user types a new password {string}")
     public void the_user_types_a_new_password(String string, String docString) {
         TestRunner.registrationPage.inputPassword(string);
     }
 
+    //*************************************************SHARED STEP ACROSS APPLICATION*********************************************************//
     @When("The user clicks on the Create Account button")
     public void the_user_clicks_on_the_Create_Account_button() {
         TestRunner.registrationPage.createAccount();
@@ -90,7 +95,7 @@ public class PlanetCreationSteps {
         TestRunner.registrationPage.goBackToLoginScreen();
     }
 
-    @Then("The user inputs their username {string} and password {string} and logs in")
+    @And("The user inputs their username {string} and password {string} and logs in")
     public void the_user_inputs_their_username_and_password_and_logs_in(String string, String string2, String docString) {
         TestRunner.loginPage.inputUsername(string);
         TestRunner.loginPage.inputPassword(string2);
@@ -103,8 +108,14 @@ public class PlanetCreationSteps {
         throw new io.cucumber.java.PendingException();
     }
 
-    @Given("The user has logged into the planetarium with username {string} and password {string}")
-    public void the_user_has_logged_into_the_planetarium_with_username_and_password(String username, String password, String docString) {
+    @Then("The user should see a result {string} reflected from adding a Planet")
+    public void the_user_should_see_a_result_reflected_from_adding_a_Planet(String result, String docString) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
+    @Then("The user should see a result {string} reflected from adding a Planet with an image")
+    public void the_user_should_see_a_result_reflected_from_adding_a_Planet_with_an_image(String result, String docString) {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
