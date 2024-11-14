@@ -43,9 +43,7 @@ public class PlanetCreationSteps {
         if(string.equals(EMPTY)) {
             string = "";
         }
-        if(!string.equals("Octostar")) {
-            TestRunner.homePage.addingPlanetName(string);
-        }
+        TestRunner.homePage.addingPlanetName(string);
     }
 
     @And("The user clicks on the file upload button and uploads an image {string}")
@@ -65,12 +63,6 @@ public class PlanetCreationSteps {
 
     @And("The user has created a new planet with the name {string} and the file path {string}")
     public void the_user_has_created_a_new_planet_with_the_name_and_the_file_path(String string, String string2, String docString) {
-//        TestRunner.homePage.changeToPlanet();
-//        TestRunner.homePage.addingPlanetName(string);
-//        String filePath = System.getenv(string2);
-//        TestRunner.homePage.addingPlanetImage(filePath);
-//        TestRunner.homePage.pressSubmitButton();
-
         the_user_clicks_on_the_dropdown_and_selects_Planet();
         the_user_inputs_the_Planet_name(string, "");
         the_user_clicks_on_the_file_upload_button_and_uploads_an_image(string2, "");
@@ -133,7 +125,7 @@ public class PlanetCreationSteps {
 
         if(result.equals("Planet is created and the user's table is refreshed to display new planet")) {
             String path = "//td[text()='" + planet + "']";
-            WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(10));
+            WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(3));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
             boolean actual = TestRunner.homePage.confirmPlanet(planet);
             Assert.assertTrue(actual);
