@@ -27,22 +27,22 @@ Feature: PlanetandMoonVisiblity
 			"""
 
 	Examples: 
-		| Host                   | Password | Login Password | Planet1 | Planet2 | Moon1 | Moon2 |
+		| Host                   | Username | 	Password	 | Planet1 | Planet2 | Moon1 | Moon2 |
 		| https://localhost:8080 | Batman   | I am the night | Earth   | Mars    | Luna  | Titan |
 
 	@PLAN-TC-43 @JREQ-PLAN-11 @AIO-FOLDER-Automated/Planet_and_Moon_Visiblity
 	Scenario Outline: Planet and Moon Visibility: User should be able to see their planets and moons by using "/planetarium" shortcut
 	Test case to check if the user can see all their planets and moons on their home page via "/planetarium" shortcut if the user has previously logged in (Error Guess testing).
 		Given The user has logged into the planetarium and has exited the application
-		When When the user inputs the url to the home page <url>
+		When When the user inputs the url to the home page <"url">
 			"""
 			URL: <url>
 			"""
-		Then User's planets and moons are visible on the home page: "<Planet1>", "<Planet2>", "<Planet1>", "<Moon2>"
+		Then The user's planets and moons should be visible to on the home page
 			"""
 			Planet1:<Planet1>
 			Planet2:<Planet2>
-			Moon1:<Planet1>
+			Moon1:<Moon1>
 			Moon2:<Moon2>
 			"""
 
@@ -126,7 +126,7 @@ Feature: PlanetandMoonVisiblity
 	@PLAN-TC-47 @JREQ-PLAN-11 @AIO-FOLDER-Automated/Planet_and_Moon_Visiblity
 	Scenario Outline: Planet and Moon Visibility: Planets and moons visible after successful moon deletion
 	Test case to check if user's planets and moons are still visible on the home page after a successful moon deletion operation (Error Guess testing).
-		Given The user has logged into the planetarium and is on the Home Page
+		Given The user has logged into Planetarium and is on the home page
 			"""
 			<url>
 			"""

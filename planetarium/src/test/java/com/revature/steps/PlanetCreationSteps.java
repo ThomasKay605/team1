@@ -18,6 +18,7 @@ import java.time.Duration;
 import java.util.List;
 
 public class PlanetCreationSteps {
+
     // For empty values
     public static final String EMPTY = "(empty)";
 
