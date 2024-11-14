@@ -14,7 +14,7 @@ Feature: UserRegistration
 		And The user should be "<Redirected>" back to the login page
 
 	Examples: 
-		| Host                   | Username | Password | Account Created | Redirected     |
+		| Host           | Username | Password | Account Created | Redirected     |
 		| localhost:8080 | Example  | Butter   | created         | redirected     |
 		| localhost:8080 | (empty)  | Butter   | not created     | not redirected |
 
@@ -30,7 +30,7 @@ Feature: UserRegistration
 		And The user should be "<Redirected>" back to the login page
 
 	Examples: 
-		| Host                   | Username                        | Password                        | Account Created | Redirected     |
+		| Host           | Username                        | Password                        | Account Created | Redirected     |
 		| localhost:8080 | (empty)                         | (empty)                         | not created     | not redirected |
 		| localhost:8080 | (empty)                         | b                               | not created     | not redirected |
 		| localhost:8080 | (empty)                         | ICannotThinkOfAGoodPassword123  | not created     | not redirected |
@@ -60,6 +60,6 @@ Feature: UserRegistration
 		And The user should be "<Redirected>" back to the login page
 
 	Examples: 
-		| Host                   | Username | Password            | Account Created | Redirected     |
+		| Host           | Username | Password            | Account Created | Redirected     |
 		| localhost:8080 | Robin    | BatmanAndRobinRocks | created         | redirected     |
 		| localhost:8080 | Batman   | BatmanAndRobinRocks | not created     | not redirected |
