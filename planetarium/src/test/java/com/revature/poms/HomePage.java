@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.revature.TestRunner;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -26,6 +27,8 @@ public class HomePage {
     private static final int WAIT = 2;
 
     public static final String TITLE = "Home";
+
+    public static final String HOME_URL = "http://localhost:8080/planetarium";
 
     @FindBy(id = "greeting")
     private WebElement greetings;
@@ -69,6 +72,10 @@ public class HomePage {
     public HomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+    }
+
+    public void getHomePage() {
+        this.driver.navigate().to(HOME_URL);
     }
 
     public String returnTitle(){

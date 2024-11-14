@@ -1,3 +1,4 @@
+
 package com.revature;
 
 import java.time.Duration;
@@ -10,16 +11,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.revature.poms.*;
-import com.revature.utility.Setup;
 
-import io.cucumber.java.Before;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
         glue = "com.revature.steps",
-        features = "classpath:features/MoonDeletion.feature",
+        features = "classpath:features",
         plugin = {"pretty","json:src/test/resources/json-report.json", "html:/src/test/resources/html-report.html"}
 )
 public class TestRunner {

@@ -67,3 +67,23 @@ programming.
 - MF: Start writing Moon step implementation
 
 ### *Tuesday, November 12th, 2024*
+**Goal**: Finish writing our respective step implementations by Wednesday 11/13/24 + refactor our feature files / AIO test cases
+
+**Noteworthy**: HN has nearly finished his respective step implementation
+
+**Discussion**: Continue to work on step implementation + discovered a lot of compile errors across the board
+- HN: Finalize step implementation for visibility feature
+- TK: fixed missing Registration feature file + refactoring
+- MF: working on step implementation for Moon feature; *Blockers*: testRunner bug + lots of compiler errors + conflicting data
+- II: reviewing step implementation material + working on having AIO match feature
+
+### *Wednesday, November 13th, 2024*
+**Goal**: finish up step implementation
+
+**Discussion**: Discussed current progress with the current sprint + resolve merge conflicts
+- HN: ensure steps are unique
+- MF: refactor steps for moon feature + found issue with dropdown WebElement and corrected it
+- TK: fixed test runner + refactoring features and steps with login and registration
+- II: refactor feature and steps for planets
+
+**Blockers**: upcoming interviews

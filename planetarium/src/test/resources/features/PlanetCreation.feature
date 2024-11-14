@@ -4,7 +4,7 @@ Feature: PlanetCreation
 	@PLAN-TC-41 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
 	Scenario Outline: Planet Creation: Planets should have names that are 30 characters or less
 	Automated test case checking that creating a planet is valid if the name of the planet is not empty and less than or equal to 30 characters (Boundary Analysis testing)
-		Given The user has logged into the planetarium and is on the Home Page
+		Given The user has logged into the planetarium with username "<Username>" and password "<Password>"
 			"""
 			"<Username>", "<Password>", "<Host>"
 			"""
@@ -18,7 +18,7 @@ Feature: PlanetCreation
 			"<Path to File>"
 			"""
 		When The user clicks on the Submit Planet button
-		Then the user should see "<Result>"
+		Then The user should see a result "<Result>" reflected from adding a Planet
 			"""
 			"<Result>"
 			"""
@@ -33,9 +33,9 @@ Feature: PlanetCreation
 	@PLAN-TC-48 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
 	Scenario Outline: Planet Creation: Planets can only be created with unique names
 	Automated test case checking that planets are only created if the name for the planet is unique (Equivalence Partitioning testing).
-		Given The user has logged into the planetarium and is on the Home Page
+		Given The user has logged into the planetarium with username "<Username>" and password "<Password>"
 			"""
-			"<Host>", "<Username>", "<Password>"
+			"<Username>", "<Password>", "<Host>"
 			"""
 		When The user clicks on the dropdown and selects Planet
 		Then The user inputs the Planet name "<Planet name>"
@@ -47,7 +47,7 @@ Feature: PlanetCreation
 			"<Path to File>"
 			"""
 		When The user clicks on the Submit Planet button
-		Then the user should see "<Result>"
+		Then The user should see a result "<Result>" reflected from adding a Planet
 			"""
 			"<Result>"
 			"""
@@ -60,9 +60,9 @@ Feature: PlanetCreation
 	@PLAN-TC-49 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
 	Scenario Outline: Planet Creation: Planets can be created with uploaded images from an user or with not image required
 	Automated test case to check if a user can create a planet with or without an associated image (Error Guess testing).
-		Given The user has logged into the planetarium and is on the Home Page
+		Given The user has logged into the planetarium with username "<Username>" and password "<Password>"
 			"""
-			"<Home page>", "<Valid Username>", "<Valid Password>"
+			"<Username>", "<Password>", "<Host>"
 			"""
 		When The user clicks on the dropdown and selects Planet
 		Then The user inputs the Planet name "<Planet name>"
@@ -74,29 +74,29 @@ Feature: PlanetCreation
 			"<Path to File>"
 			"""
 		When The user clicks on the Submit Planet button
-		Then the user should see "<Planet result>"
+		Then The user should see a result "<Planet result>" reflected from adding a Planet with an image
 			"""
 			"<Planet result>"
 			"""
 
 		Examples:
-			| Home page                          | Planet name | Path to File | Planet result                                                      | Valid Username | Valid Password |
-			| https://localhost:8080/planetarium | Neptune     | PLANET_PATH  | The new planet can be seen with the associated image with it       | Batman         | I am the night |
-			| https://localhost:8080/planetarium | Uranus      | PLANET_PATH  | The new planet can be seen with the associated image with it       | Batman         | I am the night |
-			| https://localhost:8080/planetarium | Pluto       | PLANET_PATH  | The new planet can be seen with a default image associated with it | Batman         | I am the night |
+			| Host                               | Planet name | Path to File    | Planet result                                                | Username | Password       |
+			| https://localhost:8080/planetarium | Neptune     | PLANET_PATH     | The new planet can be seen with the associated image with it | Batman   | I am the night |
+			| https://localhost:8080/planetarium | Uranus      | PLANET_PATH_PNG | The new planet can be seen with the associated image with it | Batman   | I am the night |
+			| https://localhost:8080/planetarium | Pluto       | (empty)         | The new planet can be seen without an associated image       | Batman   | I am the night |
 
 	@PLAN-TC-50 @JREQ-PLAN-11 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
 	Scenario Outline: Planet Creation: Planet created should be only visible to the user that created the planet
 	Automated test case to see if a newly created planet is only visible to the owner of the planet and to no one else (Error Guess testing).
-		Given The user has logged into the planetarium and is on the Home Page
+		Given The user has logged into the planetarium with username "<Username>" and password "<Password>"
 			"""
-			"<Host>", "<Valid Username>", "<Valid Password>"
+			"<Username>", "<Password>", "<Host>"
 			"""
 		And The user has created a new planet with the name "<New planet>" and the file path "<Path to File>"
 			"""
 			"<New planet>", "<Path to File>"
 			"""
-		When the user clicks on the "Logout" button
+		When the user clicks on the Logout button
 		Then The user is redirected and clicks on the Create Account button
 		And The user types a new username "<New Username>"
 			"""
@@ -118,5 +118,5 @@ Feature: PlanetCreation
 			"""
 
 		Examples:
-			| Host           | New planet | New Username | New Password | Valid Username | Valid Password | Path to File |
-			| localhost:8080 | Venus      | Toby         | Butter       | Batman         | I am the night | PLANET_PATH  |
+			| Host           | New planet | New Username | New Password | Username | Password       | Path to File |
+			| localhost:8080 | Venus      | Toby         | Butter       | Batman   | I am the night | PLANET_PATH  |
