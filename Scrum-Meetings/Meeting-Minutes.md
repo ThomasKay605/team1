@@ -87,3 +87,16 @@ programming.
 - II: refactor feature and steps for planets
 
 **Blockers**: upcoming interviews
+
+### *Thursday, November 14th, 2024*
+**Goal**: wrap up code execution and have a code freeze at 1:00pm EST; prepare for Stakeholder presentation tomorrow
+
+**Discussion**: Meeting with the Stakeholder for a check-in and discussed current progress
+- HN: fixing planet visibility requirement tests
+- MF: clearing duplicate steps and ensuring tests run + debugging tests + finished moon creation / deletion tests
+- TK: finished user login + registration tests + debugging tests across application
+- II: more refactoring plus fixed step implementations for planet deletion and creation
+
+**Retrospective**: Feature file refactor has halted a lot of our progress
+
+/*************************************************** END OF SPRINT *******************************************************/
