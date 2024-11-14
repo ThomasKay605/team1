@@ -18,9 +18,9 @@ Feature: PlanetCreation
 			"<Path to File>"
 			"""
 		When The user clicks on the Submit Planet button
-		Then The user should see a result "<Result>" reflected from adding a Planet
+		Then The user should see a result "<Result>" reflected from adding a Planet "<Planet name>"
 			"""
-			"<Result>"
+			"<Result>", "<Planet name>"
 			"""
 
 		Examples:
@@ -38,7 +38,7 @@ Feature: PlanetCreation
 			"<Username>", "<Password>", "<Host>"
 			"""
 		When The user clicks on the dropdown and selects Planet
-		Then The user inputs the Planet name "<Planet name>"
+		Then The user inputs the Planet name "<Planet Name>"
 			"""
 			"<Planet Name>"
 			"""
@@ -47,14 +47,14 @@ Feature: PlanetCreation
 			"<Path to File>"
 			"""
 		When The user clicks on the Submit Planet button
-		Then The user should see a result "<Result>" reflected from adding a Planet
+		Then The user should see a result "<Result>" reflected from adding a Planet "<Planet Name>"
 			"""
-			"<Result>"
+			"<Result>", "<Planet Name>"
 			"""
 
 		Examples:
 			| Host                   | Username | Password       | Planet Name | Result                                                                                | Path to File |
-			| https://localhost:8080 | Batman   | I am the night | Venus       | Planet is created and the user's table is refreshed to display new planet             | PLANET_PATH  |
+			| https://localhost:8080 | Batman   | I am the night | Wriggler    | Planet is created and the user's table is refreshed to display new planet             | PLANET_PATH  |
 			| https://localhost:8080 | Batman   | I am the night | Mars        | User receives a notification that planet creation with their planet's name has failed | PLANET_PATH  |
 
 	@PLAN-TC-49 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
@@ -74,9 +74,9 @@ Feature: PlanetCreation
 			"<Path to File>"
 			"""
 		When The user clicks on the Submit Planet button
-		Then The user should see a result "<Planet result>" reflected from adding a Planet with an image
+		Then The user should see a result "<Planet result>" reflected from adding a Planet "<Planet name>" with an image
 			"""
-			"<Planet result>"
+			"<Planet result>", "<Planet name>"
 			"""
 
 		Examples:
