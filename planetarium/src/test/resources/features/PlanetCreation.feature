@@ -54,7 +54,7 @@ Feature: PlanetCreation
 
 		Examples:
 			| Host                   | Username | Password       | Planet Name | Result                                                                                | Path to File |
-			| https://localhost:8080 | Batman   | I am the night | Venus       | Planet is created and the user's table is refreshed to display new planet             | PLANET_PATH  |
+			| https://localhost:8080 | Batman   | I am the night | Wriggler    | Planet is created and the user's table is refreshed to display new planet             | PLANET_PATH  |
 			| https://localhost:8080 | Batman   | I am the night | Mars        | User receives a notification that planet creation with their planet's name has failed | PLANET_PATH  |
 
 	@PLAN-TC-49 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation

@@ -162,8 +162,8 @@ public class HomePage {
     public boolean confirmPlanet(String celestialName){
         List <WebElement> table = driver.findElements(By.xpath("//*[@id='celestialTable']/tbody/tr[position()>1]" ));
         for (WebElement row : table){
-            if(row.findElement(By.xpath("//td[3]")).getText().equals(celestialName)&&
-                    row.findElement(By.xpath("//td[1]")).getText().equals("planet")){
+            if(row.findElement(By.xpath("td[3]")).getText().equals(celestialName)&&
+                    row.findElement(By.xpath("td[1]")).getText().equals("planet")){
                 return true;
             }
         }

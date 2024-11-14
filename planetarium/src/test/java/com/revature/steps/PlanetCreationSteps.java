@@ -97,12 +97,6 @@ public class PlanetCreationSteps {
         TestRunner.registrationPage.inputPassword(string);
     }
 
-    //*************************************************SHARED STEP ACROSS APPLICATION*********************************************************//
-    @When("The user clicks on the Create Account button")
-    public void the_user_clicks_on_the_Create_Account_button() {
-        TestRunner.registrationPage.createAccount();
-    }
-
     @Then("The user goes back to the login screen")
     public void the_user_goes_back_to_the_login_screen() {
         TestRunner.registrationPage.goBackToLoginScreen();
@@ -129,13 +123,11 @@ public class PlanetCreationSteps {
         if(planet.equals(EMPTY)) {
             planet = "";
         }
+
         if(result.equals("Planet is created and the user's table is refreshed to display new planet")) {
             // DOES NOT WORK
-            int size = TestRunner.homePage.getTableRows().size();
-//            TestRunner.alertWait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.id("celestialTable"), size));
-
-            String path = "//td[@text=" + planet + "]";
-            WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(5));
+            String path = "//td[text()='" + planet + "']";
+            WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
             boolean actual = TestRunner.homePage.confirmPlanet(planet);
             Assert.assertTrue(actual);
@@ -146,7 +138,7 @@ public class PlanetCreationSteps {
             try {
                 String expectedResult = "Failed to create Planet with name " + planet;
                 String actualResult = alert.getText().trim();
-                Assert.assertEquals(expectedResult, actualResult);
+                Assert.assertEquals(expectedResult.trim(), actualResult);
             } catch (NoAlertPresentException e) {
                 System.out.println(e.getMessage());
             } finally {
