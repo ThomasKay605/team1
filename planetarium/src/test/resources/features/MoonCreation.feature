@@ -69,7 +69,7 @@ Feature: MoonCreation
 
     Examples:
       | Login Page              | Moon name | Moon Created? | Result                                                              | Planet ID | Username | Password    | Moon image |
-      | https://localhost/8080/ | Deimos    | true          | ((no alert, table refresh))                                         | 2         | Batman   | Iamthenight | moon-2.jpg |
+      | https://localhost/8080/ | Deimos    | true          | (no alert, table refresh)                                         | 2         | Batman   | I am the night | moon-2.jpg |
       | https://localhost/8080/ | Deimos    | false         | Failed to create Moon orbiting planet ${planetId} with name ${name} | 2         | Toby     | Butter      | moon-2.jpg |
       | https://localhost/8080/ | Deimos    | false         | Failed to create Moon orbiting planet ${planetId} with name ${name} | 3         | Toby     | Butter      | moon-2.jpg |
 

@@ -135,4 +135,35 @@ public class MoonCreationSteps {
         // JOptionPane.showMessageDialog(null, moonName + "\n<" + String.valueOf(planetID) + ">");
         Assert.assertTrue(TestRunner.homePage.confirmMoon(moonName, planetID));
     }
+
+    @Then("the user should see that moon created is false")
+    public void the_user_should_see_that_moon_created_is_false(String docString) {
+        // Write code here that turns the phrase above into concrete actions
+        String moonName = getMoonNameFromDocString(docString);
+
+        Assert.assertFalse(TestRunner.homePage.confirmMoon(moonName));
+    }
+
+    @Then("the user should see that moon created is true with owner as {string}")
+    public void the_user_should_see_that_moon_created_is_true_with_owner_as(String string, String docString) {
+        int planetID;
+        try{
+            planetID = Integer.parseInt(string);
+        }
+        catch (Exception e){
+            Assert.fail(e.getMessage());
+            return;
+        }
+        Assert.assertTrue(TestRunner.homePage.confirmMoon(docString, planetID));
+    }
+
+    @Then("the user should see that moon created is false with owner as {string}")
+    public void the_user_should_see_that_moon_created_is_false_with_owner_as(String string, String docString) {
+        // Write code here that turns the phrase above into concrete actions
+        Assert.assertFalse(TestRunner.homePage.confirmMoon(docString));
+    }
+
+    @When("the user acknowledges the account creation alert")
+    public void theUserAcknowledgesTheAccountCreationAlert() {
+    }
 }
