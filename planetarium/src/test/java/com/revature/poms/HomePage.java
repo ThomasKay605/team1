@@ -185,7 +185,7 @@ public class HomePage {
      * @return boolean whether a Moon with the parameters exists in the table
      */
     public boolean confirmMoon(String celestialName, int planetID){
-        driver.navigate().refresh();
+        
         List <WebElement> table = driver.findElements(By.xpath("//*[@id='celestialTable']/tbody/tr[position()>1]" ));
 
         for (WebElement row : table){
