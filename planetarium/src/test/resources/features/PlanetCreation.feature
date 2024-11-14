@@ -18,9 +18,9 @@ Feature: PlanetCreation
 			"<Path to File>"
 			"""
 		When The user clicks on the Submit Planet button
-		Then The user should see a result "<Result>" reflected from adding a Planet
+		Then The user should see a result "<Result>" reflected from adding a Planet "<Planet name>"
 			"""
-			"<Result>"
+			"<Result>", "<Planet name>"
 			"""
 
 		Examples:
@@ -38,7 +38,7 @@ Feature: PlanetCreation
 			"<Username>", "<Password>", "<Host>"
 			"""
 		When The user clicks on the dropdown and selects Planet
-		Then The user inputs the Planet name "<Planet name>"
+		Then The user inputs the Planet name "<Planet Name>"
 			"""
 			"<Planet Name>"
 			"""
@@ -47,9 +47,9 @@ Feature: PlanetCreation
 			"<Path to File>"
 			"""
 		When The user clicks on the Submit Planet button
-		Then The user should see a result "<Result>" reflected from adding a Planet
+		Then The user should see a result "<Result>" reflected from adding a Planet "<Planet Name>"
 			"""
-			"<Result>"
+			"<Result>", "<Planet Name>"
 			"""
 
 		Examples:
@@ -74,9 +74,9 @@ Feature: PlanetCreation
 			"<Path to File>"
 			"""
 		When The user clicks on the Submit Planet button
-		Then The user should see a result "<Planet result>" reflected from adding a Planet with an image
+		Then The user should see a result "<Planet result>" reflected from adding a Planet "<Planet name>" with an image
 			"""
-			"<Planet result>"
+			"<Planet result>", "<Planet name>"
 			"""
 
 		Examples:

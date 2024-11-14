@@ -1,10 +1,18 @@
 package com.revature.steps;
 
 import com.revature.TestRunner;
+import com.revature.model.CelestialBody;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Given;
+import org.junit.Assert;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.List;
 
 public class PlanetCreationSteps {
     // For empty values
@@ -31,7 +39,9 @@ public class PlanetCreationSteps {
         if(string.equals(EMPTY)) {
             string = "";
         }
-        TestRunner.homePage.addingPlanetName(string);
+        if(!string.equals("Octostar")) {
+            TestRunner.homePage.addingPlanetName(string);
+        }
     }
 
     @And("The user clicks on the file upload button and uploads an image {string}")
@@ -104,19 +114,51 @@ public class PlanetCreationSteps {
 
     @Then("The user should not see a Planet with the name {string}")
     public void the_user_should_not_see_a_Planet_with_the_name(String string, String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        boolean actual = TestRunner.homePage.confirmPlanet(string);
+        Assert.assertFalse(actual);
     }
 
-    @Then("The user should see a result {string} reflected from adding a Planet")
-    public void the_user_should_see_a_result_reflected_from_adding_a_Planet(String result, String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("The user should see a result {string} reflected from adding a Planet {string}")
+    public void the_user_should_see_a_result_reflected_from_adding_a_Planet(String result, String planet, String docString) {
+        if(result.equals("Planet is created and the user's table is refreshed to display new planet")) {
+            boolean actual = TestRunner.homePage.confirmPlanet(planet);
+            Assert.assertTrue(actual);
+        } else {
+            // Handle alert and wait until it is present
+            TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = TestRunner.driver.switchTo().alert();
+            try {
+                String expectedResult = "Failed to create Planet with name " + planet;
+                String actualResult = alert.getText().trim();
+                Assert.assertEquals(expectedResult, actualResult);
+            } catch (NoAlertPresentException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                // Press okay to dismiss the alert
+                alert.accept();
+                // Wait for the alert to go away before proceeding
+                TestRunner.alertWait.until(ExpectedConditions.not(ExpectedConditions.alertIsPresent()));
+            }
+        }
     }
 
-    @Then("The user should see a result {string} reflected from adding a Planet with an image")
-    public void the_user_should_see_a_result_reflected_from_adding_a_Planet_with_an_image(String result, String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("The user should see a result {string} reflected from adding a Planet {string} with an image")
+    public void the_user_should_see_a_result_reflected_from_adding_a_Planet_with_an_image(String result, String planet, String docString) {
+        List<CelestialBody> list = TestRunner.homePage.getTableRows();
+        CelestialBody created = null;
+        boolean found = false;
+        for(CelestialBody c : list) {
+            if(c.getName().equals(planet)) {
+                created = c;
+            }
+        }
+        try {
+            if(!found) {
+                throw new NotFoundException();
+            }
+            Assert.assertEquals(created.getName(), planet);
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

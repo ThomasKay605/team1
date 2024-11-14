@@ -18,13 +18,13 @@ Feature: PlanetDeletion
 			"<Planet name>"
 			"""
 		And The user clicks on the Delete Planet button
-		Then The user should see a result "<Result>" reflected from deleting a Planet
+		Then The user should see a result "<Result>" reflected from deleting a Planet "<Planet name>"
 			"""
-			"<Result>"
+			"<Result>", "<Planet name>"
 			"""
 
 		Examples:
 			| Host                       | Planet name | Result                                                                                      | Username | Password       | New planet | Path to File |
 			| localhost:8080/planetarium | Mars        | The planet was deleted and the table refreshes to no longer have the deleted planet         | Batman   | I am the night | Mars       | PLANET_PATH  |
-			| localhost:8080/planetarium | Jupiter     | The user receives a notification that deleting the planet with the inputted name has failed | Batman   | I am the night | Jupiter    | PLANET_PATH  |
-			| localhost:8080/planetarium | Venus       | The user receives a notification that deleting the planet with the inputted name has failed | Batman   | I am the night | Venus      | PLANET_PATH  |
+			| localhost:8080/planetarium | (empty)     | The user receives a notification that deleting the planet with the inputted name has failed | Batman   | I am the night | Jupiter    | PLANET_PATH  |
+			| localhost:8080/planetarium | Octostar    | The user receives a notification that deleting the planet with the inputted name has failed | Batman   | I am the night | Venus      | PLANET_PATH  |
