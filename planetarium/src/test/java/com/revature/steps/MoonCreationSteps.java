@@ -5,10 +5,34 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Given;
+import org.junit.Assert;
+import org.openqa.selenium.TimeoutException;
 
 import javax.swing.*;
 
 public class MoonCreationSteps {
+
+    private final String NO_ALERT = "(no alert, table refresh)";
+
+    /**
+     * Many steps return a docstring that's like <code>moonName, planetID</code>.
+     * This method returns the moon name from the doc string.
+     * That also means have moon names with commas will break this function, but that's not my problem now.
+     * @param docString
+     * @return the moon name extracted from the <code>docString</code>
+     */
+    private String getMoonNameFromDocString(String docString){
+        return docString.substring(0, docString.indexOf(','));
+    }
+
+    /**
+     * Similar to <code>getMoonNameFromDocString</code> but with Planet ID.
+     * @param docString
+     * @return the Planet ID from <code>docString</code> as a string
+     */
+    private String getPlanetIDFromDocString(String docString){
+        return docString.substring(docString.indexOf(',') + 2);
+    }
 
     /**
      * Since the team agreed that the environment variable points to a celestial image, I wanted the
@@ -37,95 +61,13 @@ public class MoonCreationSteps {
         TestRunner.homePage.addingMoonName(moonName);
     }
 
-    @Then("the user should see that moon created is <Moon Created?>")
-    public void the_user_should_see_that_moon_created_is_Moon_Created(String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @When("the user attaches .\\/Celestial Images\\/moon-{int}.jpeg")
-    public void the_user_attaches_Celestial_Images_moon_jpeg(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @Then("the user should see that moon created is true")
-    public void the_user_should_see_that_moon_created_is_true(String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @Then("the user should see that moon created is false")
-    public void the_user_should_see_that_moon_created_is_false(String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
+    /**
+     * For whatever reason the argument-less version of this step is only used in moon creation.
+     * @author Marcell Fulop
+     */
     @Given("The user is on the login page")
     public void the_user_is_on_the_login_page() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @When("the user attaches .\\/Celestial Images\\/moon-{int}.jpg")
-    public void the_user_attaches_Celestial_Images_moon_jpg(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @Then("the user should see that moon created is true with owner as {int}")
-    public void the_user_should_see_that_moon_created_is_true_with_owner_as(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @Then("the user should see that moon created is false with owner as {int}")
-    public void the_user_should_see_that_moon_created_is_false_with_owner_as(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @When("the user attaches realistic-moon.png")
-    public void the_user_attaches_realistic_moon_png() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @When("the user attaches \\(none)")
-    public void the_user_attaches_none() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @When("the user attaches <Moon image>")
-    public void the_user_attaches_Moon_image() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @When("the user should see the moon created is true")
-    public void the_user_should_see_the_moon_created_is_true() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @When("the user acknowledges the account creation alert")
-    public void the_user_acknowledges_the_account_creation_alert() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-
-    @Then("The user should be redirected to {string}")
-    public void the_user_should_be_redirected_to(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @Then("the user should see that the moon {string} visibility is <Moon visible to nonowner>")
-    public void the_user_should_see_that_the_moon_visibility_is_Moon_visible_to_nonowner(String moonName, boolean isVisible) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        TestRunner.loginPage.getLoginPage();
     }
 
     /**
@@ -134,10 +76,6 @@ public class MoonCreationSteps {
     @When("the user clicks submit moon")
     public void theUserClicksSubmitMoon() {
         TestRunner.homePage.pressSubmitButton();
-    }
-
-    @And("the user should see that the moon {string} visibility is <Moon Visible to Nonowner?>")
-    public void theUserShouldSeeThatTheMoonVisibilityIsMoonVisibleToNonowner(String arg0) {
     }
 
     /**
@@ -157,4 +95,42 @@ public class MoonCreationSteps {
     }
 
 
+    @Then("the user should see {string} in moon creation")
+    public void theUserShouldSeeInMoonCreation(String result, String docString) {
+        // are we expecting an alert if no ...
+        if (result.equals(NO_ALERT)){
+            // try to fail to get alert
+            // if it doesn't throw then that means an alert was shown which is not what we want
+            Assert.assertThrows(TimeoutException.class, () -> {
+                TestRunner.homePage.getAlertText();
+                TestRunner.homePage.closeAlert();
+            });
+        }
+        // else we are expecting an alert
+        else{
+            String expected = "Failed to create Moon orbiting planet " + getPlanetIDFromDocString(docString) +
+                    " with name " + getMoonNameFromDocString(docString);
+            try {
+                Assert.assertSame(expected, TestRunner.homePage.getAlertText());
+            }
+            catch (TimeoutException e){
+                Assert.fail("No alert created when expected with ");
+            }
+        }
+    }
+
+    @Then("the user should see that moon created is true")
+    public void the_user_should_see_that_moon_created_is_true(String docString) {
+        // Write code here that turns the phrase above into concrete actions
+        String moonName = getMoonNameFromDocString(docString);
+        int planetID;
+        try {
+            planetID = Integer.parseInt(getPlanetIDFromDocString(docString));
+        }
+        catch (Exception e){
+            Assert.fail("Failed to parse planet id from doc string <" + docString + ">.");
+            return;
+        }
+        Assert.assertTrue(TestRunner.homePage.confirmMoon(moonName));
+    }
 }

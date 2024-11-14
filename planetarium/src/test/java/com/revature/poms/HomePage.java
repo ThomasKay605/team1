@@ -175,6 +175,26 @@ public class HomePage {
         return false;
     }
 
+    /**
+     * Confirms that there is a celestial body that is type Moon with <code>celestialName</code> and
+     * <code>planetID</code> otherwise return false
+     * @param celestialName
+     * @param planetID
+     * @return boolean whether a Moon with the parameters exists in the table
+     */
+    public boolean confirmMoon(String celestialName, int planetID){
+        List <WebElement> table = driver.findElements(By.xpath("//*[@id='celestialTable']/tbody/tr[position()>1]" ));
+        for (WebElement row : table){
+            if (
+                    row.findElement(By.xpath("//td[3]")).getText().equals(celestialName)   &&
+                    row.findElement(By.xpath("//td[1]")).getText().equals("moon")          &&
+                    row.findElement(By.xpath("//td[4]")).getText().equals(String.valueOf(planetID)) ){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean confirmOrbitPlanet(String celestialName, int planetID){
         List <WebElement> table = driver.findElements(By.xpath("//*[@id='celestialTable']/tbody/tr[position()>1]" ));
         for (WebElement row : table){
@@ -202,14 +222,12 @@ public class HomePage {
         }
         return celestialBodies;
     }
-   
-     // does not work as expected 
+
      public String getAlertText() {
         TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
         return TestRunner.driver.switchTo().alert().getText();
     }
 
-   // does not work as expected 
     public void closeAlert() {
         Alert alert = TestRunner.driver.switchTo().alert();
         alert.accept();

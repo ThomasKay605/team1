@@ -66,7 +66,10 @@ public class MoonDeletionSteps {
     public void theUserShouldSeeInMoonDeletion(String result, String docString) {
         // Are we expecting an alert?
         if (result.equals(NO_ALERT)){
-            Assert.assertThrows(TimeoutException.class, () -> TestRunner.homePage.getAlertText());
+            Assert.assertThrows(TimeoutException.class, () -> {
+                TestRunner.homePage.getAlertText();
+                TestRunner.homePage.closeAlert();
+            });
         }
         else {
             String expected = "Failed to delete Moon with name " + docString;
