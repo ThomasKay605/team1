@@ -7,11 +7,11 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.TimeoutException;
 
-import javax.swing.*;
 
 public class MoonDeletionSteps {
-
+    private static final String NO_ALERT = "(no alert, table refresh)";
     /**
      * Given the user is "Batman" and is on the homepage
      */
@@ -37,12 +37,14 @@ public class MoonDeletionSteps {
     public void the_user_should_see_that_moon_deleted_is_true(String docString) {
         // Write code here that turns the phrase above into concrete actions
         Assert.assertFalse(TestRunner.homePage.confirmMoon(docString));
+
     }
 
     @Then("the user should see that moon deleted is false")
     public void the_user_should_see_that_moon_deleted_is_false(String docString) {
         // Confirm that the moon does not exist anymore
         Assert.assertTrue(TestRunner.homePage.confirmMoon(docString));
+
     }
 
     @And("the user clicks the Delete button")
@@ -51,18 +53,37 @@ public class MoonDeletionSteps {
     }
 
 
+    /**
+     * This method abstracts several scenarios. One path expects a browser alert and another doesn't.
+     * The only way to check if no alert when expecting that I have found has been made to try to switch
+     * to it and see a "timeout" exception that means the driver is unable to find the alert. That means
+     * setting a high implicit wait time will make this method slow.
+     * @author Marcell Fulop
+     * @param result either represents no alert or the alert text that should be made
+     * @param docString represents the moon name
+     */
     @Then("the user should see {string} in moon deletion")
     public void theUserShouldSeeInMoonDeletion(String result, String docString) {
         // Are we expecting an alert?
-        if (result.equals("(no alert, table refresh)")){
-            Assert.assertThrows(Exception.class, () -> TestRunner.homePage.getAlertText());
+        if (result.equals(NO_ALERT)){
+            Assert.assertThrows(TimeoutException.class, () -> {
+                TestRunner.homePage.getAlertText();
+                TestRunner.homePage.closeAlert();
+            });
         }
         else {
             String expected = "Failed to delete Moon with name " + docString;
-            String alert = TestRunner.homePage.getAlertText();
+            String alert;
+            try {
+                alert = TestRunner.homePage.getAlertText();
+                Assert.assertEquals(expected, alert);
+                TestRunner.homePage.closeAlert();
+            }
+            catch (TimeoutException e){
+                // Alert expected, but no alert found
+                Assert.fail("Alert expected for deleting " + docString + " but none generated.");
+            }
 
-            Assert.assertEquals(expected, alert);
-            TestRunner.homePage.closeAlert();
         }
 
 
