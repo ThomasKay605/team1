@@ -99,6 +99,12 @@ public class PlanetCreationSteps {
 
     @Then("The user goes back to the login screen")
     public void the_user_goes_back_to_the_login_screen() {
+        TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
+        Alert alert = TestRunner.driver.switchTo().alert();
+        // Press okay to dismiss the alert
+        alert.accept();
+        // Wait for the alert to go away before proceeding
+        TestRunner.alertWait.until(ExpectedConditions.not(ExpectedConditions.alertIsPresent()));
         TestRunner.registrationPage.goBackToLoginScreen();
     }
 
@@ -125,7 +131,6 @@ public class PlanetCreationSteps {
         }
 
         if(result.equals("Planet is created and the user's table is refreshed to display new planet")) {
-            // DOES NOT WORK
             String path = "//td[text()='" + planet + "']";
             WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
@@ -152,6 +157,10 @@ public class PlanetCreationSteps {
 
     @Then("The user should see a result {string} reflected from adding a Planet {string} with an image")
     public void the_user_should_see_a_result_reflected_from_adding_a_Planet_with_an_image(String result, String planet, String docString) {
+        String path = "//td[text()='" + planet + "']";
+        WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
+
         List<CelestialBody> list = TestRunner.homePage.getTableRows();
         CelestialBody created = null;
         boolean found = false;
