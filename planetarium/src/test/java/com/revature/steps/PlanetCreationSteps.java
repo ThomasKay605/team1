@@ -8,15 +8,18 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Given;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class PlanetCreationSteps {
     // For empty values
-    public static final String EMPTY = "empty";
+    public static final String EMPTY = "(empty)";
 
     //*************************************************SHARED STEP ACROSS APPLICATION*********************************************************//
     @Given("The user has logged into the planetarium with username {string} and password {string}")
@@ -114,13 +117,26 @@ public class PlanetCreationSteps {
 
     @Then("The user should not see a Planet with the name {string}")
     public void the_user_should_not_see_a_Planet_with_the_name(String string, String docString) {
+        if(string.equals(EMPTY)) {
+            string = "";
+        }
         boolean actual = TestRunner.homePage.confirmPlanet(string);
         Assert.assertFalse(actual);
     }
 
     @Then("The user should see a result {string} reflected from adding a Planet {string}")
     public void the_user_should_see_a_result_reflected_from_adding_a_Planet(String result, String planet, String docString) {
+        if(planet.equals(EMPTY)) {
+            planet = "";
+        }
         if(result.equals("Planet is created and the user's table is refreshed to display new planet")) {
+            // DOES NOT WORK
+            int size = TestRunner.homePage.getTableRows().size();
+//            TestRunner.alertWait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.id("celestialTable"), size));
+
+            String path = "//td[@text=" + planet + "]";
+            WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
             boolean actual = TestRunner.homePage.confirmPlanet(planet);
             Assert.assertTrue(actual);
         } else {

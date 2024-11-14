@@ -12,7 +12,6 @@ Feature: PlanetDeletion
 			"""
 			"<New planet>", "<Path to File>"
 			"""
-		When The user clicks on the dropdown and selects Planet
 		Then The user inputs the Planet name "<Planet name>" in the Planet Delete field
 			"""
 			"<Planet name>"
@@ -25,6 +24,6 @@ Feature: PlanetDeletion
 
 		Examples:
 			| Host                       | Planet name | Result                                                                                      | Username | Password       | New planet | Path to File |
-			| localhost:8080/planetarium | Mars        | The planet was deleted and the table refreshes to no longer have the deleted planet         | Batman   | I am the night | Mars       | PLANET_PATH  |
+			| localhost:8080/planetarium | Dookie      | The planet was deleted and the table refreshes to no longer have the deleted planet         | Batman   | I am the night | Dookie     | PLANET_PATH  |
 			| localhost:8080/planetarium | (empty)     | The user receives a notification that deleting the planet with the inputted name has failed | Batman   | I am the night | Jupiter    | PLANET_PATH  |
 			| localhost:8080/planetarium | Octostar    | The user receives a notification that deleting the planet with the inputted name has failed | Batman   | I am the night | Venus      | PLANET_PATH  |
