@@ -15,8 +15,8 @@ Feature: UserRegistration
 
 	Examples: 
 		| Host                   | Username | Password | Account Created | Redirected     |
-		| https://localhost:8080 | Example  | Butter   | created         | redirected     |
-		| https://localhost:8080 | (empty)  | Butter   | not created     | not redirected |
+		| localhost:8080 | Example  | Butter   | created         | redirected     |
+		| localhost:8080 | (empty)  | Butter   | not created     | not redirected |
 
 	@PLAN-TC-36 @JREQ-PLAN-9 @AIO-FOLDER-Automated/User_Registration
 	Scenario Outline: User Registration: Length of usernames and passwords 
@@ -31,22 +31,22 @@ Feature: UserRegistration
 
 	Examples: 
 		| Host                   | Username                        | Password                        | Account Created | Redirected     |
-		| https://localhost:8080 | (empty)                         | (empty)                         | not created     | not redirected |
-		| https://localhost:8080 | (empty)                         | b                               | not created     | not redirected |
-		| https://localhost:8080 | (empty)                         | ICannotThinkOfAGoodPassword123  | not created     | not redirected |
-		| https://localhost:8080 | (empty)                         | ICannotThinkOfAGoodPassword1234 | not created     | not redirected |
-		| https://localhost:8080 | a                               | (empty)                         | not created     | not redirected |
-		| https://localhost:8080 | a                               | b                               | created         | redirected     |
-		| https://localhost:8080 | a                               | ICannotThinkOfAGoodPassword123  | created         | redirected     |
-		| https://localhost:8080 | a                               | ICannotThinkOfAGoodPassword1234 | not created     | not redirected |
-		| https://localhost:8080 | IHaveTheTwoBestDogsInTheWorld!  | (empty)                         | not created     | not redirected |
-		| https://localhost:8080 | IHaveTheTwoBestDogsInTheWorld!  | b                               | created         | redirected     |
-		| https://localhost:8080 | IHaveTheTwoBestDogsInTheWorld!  | ICannotThinkOfAGoodPassword123  | created         | redirected     |
-		| https://localhost:8080 | IHaveTheTwoBestDogsInTheWorld!  | ICannotThinkOfAGoodPassword1234 | not created     | not redirected |
-		| https://localhost:8080 | IHaveTheTwoBestDogsInTheWorld!! | (empty)                         | not created     | not redirected |
-		| https://localhost:8080 | IHaveTheTwoBestDogsInTheWorld!! | b                               | not created     | not redirected |
-		| https://localhost:8080 | IHaveTheTwoBestDogsInTheWorld!! | ICannotThinkOfAGoodPassword123  | not created     | not redirected |
-		| https://localhost:8080 | IHaveTheTwoBestDogsInTheWorld!! | ICannotThinkOfAGoodPassword1234 | not created     | not redirected |
+		| localhost:8080 | (empty)                         | (empty)                         | not created     | not redirected |
+		| localhost:8080 | (empty)                         | b                               | not created     | not redirected |
+		| localhost:8080 | (empty)                         | ICannotThinkOfAGoodPassword123  | not created     | not redirected |
+		| localhost:8080 | (empty)                         | ICannotThinkOfAGoodPassword1234 | not created     | not redirected |
+		| localhost:8080 | a                               | (empty)                         | not created     | not redirected |
+		| localhost:8080 | a                               | b                               | created         | redirected     |
+		| localhost:8080 | a                               | ICannotThinkOfAGoodPassword123  | created         | redirected     |
+		| localhost:8080 | a                               | ICannotThinkOfAGoodPassword1234 | not created     | not redirected |
+		| localhost:8080 | IHaveTheTwoBestDogsInTheWorld!  | (empty)                         | not created     | not redirected |
+		| localhost:8080 | IHaveTheTwoBestDogsInTheWorld!  | b                               | created         | redirected     |
+		| localhost:8080 | IHaveTheTwoBestDogsInTheWorld!  | ICannotThinkOfAGoodPassword123  | created         | redirected     |
+		| localhost:8080 | IHaveTheTwoBestDogsInTheWorld!  | ICannotThinkOfAGoodPassword1234 | not created     | not redirected |
+		| localhost:8080 | IHaveTheTwoBestDogsInTheWorld!! | (empty)                         | not created     | not redirected |
+		| localhost:8080 | IHaveTheTwoBestDogsInTheWorld!! | b                               | not created     | not redirected |
+		| localhost:8080 | IHaveTheTwoBestDogsInTheWorld!! | ICannotThinkOfAGoodPassword123  | not created     | not redirected |
+		| localhost:8080 | IHaveTheTwoBestDogsInTheWorld!! | ICannotThinkOfAGoodPassword1234 | not created     | not redirected |
 
 	@PLAN-TC-37 @JREQ-PLAN-9 @AIO-FOLDER-Automated/User_Registration
 	Scenario Outline: User Registration: Usernames must be unique for account creation
@@ -61,5 +61,5 @@ Feature: UserRegistration
 
 	Examples: 
 		| Host                   | Username | Password            | Account Created | Redirected     |
-		| https://localhost:8080 | Robin    | BatmanAndRobinRocks | created         | redirected     |
-		| https://localhost:8080 | Batman   | BatmanAndRobinRocks | not created     | not redirected |
+		| localhost:8080 | Robin    | BatmanAndRobinRocks | created         | redirected     |
+		| localhost:8080 | Batman   | BatmanAndRobinRocks | not created     | not redirected |

@@ -1,14 +1,26 @@
 package com.revature.steps;
 
 import com.revature.TestRunner;
+import com.revature.model.CelestialBody;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Given;
+import org.junit.Assert;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.List;
 
 public class PlanetCreationSteps {
+
     // For empty values
-    public static final String EMPTY = "empty";
+    public static final String EMPTY = "(empty)";
 
     //*************************************************SHARED STEP ACROSS APPLICATION*********************************************************//
     @Given("The user has logged into the planetarium with username {string} and password {string}")
@@ -51,12 +63,6 @@ public class PlanetCreationSteps {
 
     @And("The user has created a new planet with the name {string} and the file path {string}")
     public void the_user_has_created_a_new_planet_with_the_name_and_the_file_path(String string, String string2, String docString) {
-//        TestRunner.homePage.changeToPlanet();
-//        TestRunner.homePage.addingPlanetName(string);
-//        String filePath = System.getenv(string2);
-//        TestRunner.homePage.addingPlanetImage(filePath);
-//        TestRunner.homePage.pressSubmitButton();
-
         the_user_clicks_on_the_dropdown_and_selects_Planet();
         the_user_inputs_the_Planet_name(string, "");
         the_user_clicks_on_the_file_upload_button_and_uploads_an_image(string2, "");
@@ -84,14 +90,14 @@ public class PlanetCreationSteps {
         TestRunner.registrationPage.inputPassword(string);
     }
 
-    //*************************************************SHARED STEP ACROSS APPLICATION*********************************************************//
-    @When("The user clicks on the Create Account button")
-    public void the_user_clicks_on_the_Create_Account_button() {
-        TestRunner.registrationPage.createAccount();
-    }
-
     @Then("The user goes back to the login screen")
     public void the_user_goes_back_to_the_login_screen() {
+        TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
+        Alert alert = TestRunner.driver.switchTo().alert();
+        // Press okay to dismiss the alert
+        alert.accept();
+        // Wait for the alert to go away before proceeding
+        TestRunner.alertWait.until(ExpectedConditions.not(ExpectedConditions.alertIsPresent()));
         TestRunner.registrationPage.goBackToLoginScreen();
     }
 
@@ -104,19 +110,65 @@ public class PlanetCreationSteps {
 
     @Then("The user should not see a Planet with the name {string}")
     public void the_user_should_not_see_a_Planet_with_the_name(String string, String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        if(string.equals(EMPTY)) {
+            string = "";
+        }
+        boolean actual = TestRunner.homePage.confirmPlanet(string);
+        Assert.assertFalse(actual);
     }
 
-    @Then("The user should see a result {string} reflected from adding a Planet")
-    public void the_user_should_see_a_result_reflected_from_adding_a_Planet(String result, String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("The user should see a result {string} reflected from adding a Planet {string}")
+    public void the_user_should_see_a_result_reflected_from_adding_a_Planet(String result, String planet, String docString) {
+        if(planet.equals(EMPTY)) {
+            planet = "";
+        }
+
+        if(result.equals("Planet is created and the user's table is refreshed to display new planet")) {
+            String path = "//td[text()='" + planet + "']";
+            WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(3));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
+            boolean actual = TestRunner.homePage.confirmPlanet(planet);
+            Assert.assertTrue(actual);
+        } else {
+            // Handle alert and wait until it is present
+            TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = TestRunner.driver.switchTo().alert();
+            try {
+                String expectedResult = "Failed to create Planet with name " + planet;
+                String actualResult = alert.getText().trim();
+                Assert.assertEquals(expectedResult.trim(), actualResult);
+            } catch (NoAlertPresentException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                // Press okay to dismiss the alert
+                alert.accept();
+                // Wait for the alert to go away before proceeding
+                TestRunner.alertWait.until(ExpectedConditions.not(ExpectedConditions.alertIsPresent()));
+            }
+        }
     }
 
-    @Then("The user should see a result {string} reflected from adding a Planet with an image")
-    public void the_user_should_see_a_result_reflected_from_adding_a_Planet_with_an_image(String result, String docString) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("The user should see a result {string} reflected from adding a Planet {string} with an image")
+    public void the_user_should_see_a_result_reflected_from_adding_a_Planet_with_an_image(String result, String planet, String docString) {
+        String path = "//td[text()='" + planet + "']";
+        WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
+
+        List<CelestialBody> list = TestRunner.homePage.getTableRows();
+        CelestialBody created = null;
+        boolean found = false;
+        for(CelestialBody c : list) {
+            if(c.getName().equals(planet)) {
+                created = c;
+            }
+        }
+        try {
+            if(!found) {
+                throw new NotFoundException();
+            }
+            Assert.assertEquals(created.getName(), planet);
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

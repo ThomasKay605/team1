@@ -18,9 +18,9 @@ Feature: PlanetCreation
 			"<Path to File>"
 			"""
 		When The user clicks on the Submit Planet button
-		Then The user should see a result "<Result>" reflected from adding a Planet
+		Then The user should see a result "<Result>" reflected from adding a Planet "<Planet name>"
 			"""
-			"<Result>"
+			"<Result>", "<Planet name>"
 			"""
 
 		Examples:
@@ -38,7 +38,7 @@ Feature: PlanetCreation
 			"<Username>", "<Password>", "<Host>"
 			"""
 		When The user clicks on the dropdown and selects Planet
-		Then The user inputs the Planet name "<Planet name>"
+		Then The user inputs the Planet name "<Planet Name>"
 			"""
 			"<Planet Name>"
 			"""
@@ -47,14 +47,14 @@ Feature: PlanetCreation
 			"<Path to File>"
 			"""
 		When The user clicks on the Submit Planet button
-		Then The user should see a result "<Result>" reflected from adding a Planet
+		Then The user should see a result "<Result>" reflected from adding a Planet "<Planet Name>"
 			"""
-			"<Result>"
+			"<Result>", "<Planet Name>"
 			"""
 
 		Examples:
 			| Host                   | Username | Password       | Planet Name | Result                                                                                | Path to File |
-			| https://localhost:8080 | Batman   | I am the night | Venus       | Planet is created and the user's table is refreshed to display new planet             | PLANET_PATH  |
+			| https://localhost:8080 | Batman   | I am the night | Cyndaquil   | Planet is created and the user's table is refreshed to display new planet             | PLANET_PATH  |
 			| https://localhost:8080 | Batman   | I am the night | Mars        | User receives a notification that planet creation with their planet's name has failed | PLANET_PATH  |
 
 	@PLAN-TC-49 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
@@ -74,16 +74,16 @@ Feature: PlanetCreation
 			"<Path to File>"
 			"""
 		When The user clicks on the Submit Planet button
-		Then The user should see a result "<Planet result>" reflected from adding a Planet with an image
+		Then The user should see a result "<Planet result>" reflected from adding a Planet "<Planet name>" with an image
 			"""
-			"<Planet result>"
+			"<Planet result>", "<Planet name>"
 			"""
 
 		Examples:
 			| Host                               | Planet name | Path to File    | Planet result                                                | Username | Password       |
-			| https://localhost:8080/planetarium | Neptune     | PLANET_PATH     | The new planet can be seen with the associated image with it | Batman   | I am the night |
-			| https://localhost:8080/planetarium | Uranus      | PLANET_PATH_PNG | The new planet can be seen with the associated image with it | Batman   | I am the night |
-			| https://localhost:8080/planetarium | Pluto       | (empty)         | The new planet can be seen without an associated image       | Batman   | I am the night |
+			| https://localhost:8080/planetarium | Treeko      | PLANET_PATH     | The new planet can be seen with the associated image with it | Batman   | I am the night |
+			| https://localhost:8080/planetarium | Grovyle     | PLANET_PATH_PNG | The new planet can be seen with the associated image with it | Batman   | I am the night |
+			| https://localhost:8080/planetarium | Sceptile    | (empty)         | The new planet can be seen without an associated image       | Batman   | I am the night |
 
 	@PLAN-TC-50 @JREQ-PLAN-11 @JREQ-PLAN-12 @AIO-FOLDER-Automated/Planet_Creation
 	Scenario Outline: Planet Creation: Planet created should be only visible to the user that created the planet
@@ -106,7 +106,7 @@ Feature: PlanetCreation
 			"""
 			"<New Password>"
 			"""
-		When The user clicks on the Create Account button
+		When The user clicks on the Create button
 		Then The user goes back to the login screen
 		And The user inputs their username "<New Username>" and password "<New Password>" and logs in
 			"""
@@ -118,5 +118,5 @@ Feature: PlanetCreation
 			"""
 
 		Examples:
-			| Host           | New planet | New Username | New Password | Username | Password       | Path to File |
-			| localhost:8080 | Venus      | Toby         | Butter       | Batman   | I am the night | PLANET_PATH  |
+			| Host           | New planet  | New Username | New Password | Username | Password       | Path to File |
+			| localhost:8080 | Wafflehouse | Jake         | Sal          | Batman   | I am the night | PLANET_PATH  |
