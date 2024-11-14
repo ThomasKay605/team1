@@ -97,6 +97,8 @@ programming.
 - TK: finished user login + registration tests + debugging tests across application
 - II: more refactoring plus fixed step implementations for planet deletion and creation
 
+**Blockers**: Refactoring feature files, duplicate steps, unexpected crashes when testing, upcoming interviews, presentation tomorrow, crunching
+
 **Retrospective**: Feature file refactor has halted a lot of our progress
 
 /*************************************************** END OF SPRINT *******************************************************/
