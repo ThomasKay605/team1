@@ -89,7 +89,7 @@ public class PlanetandMoonVisibilitySteps {
 
     @And("User performs a successful moon creation operation")
     public void userPerformsASuccessfulMoonCreationOperation() {
-        TestRunner.homePage.addingMoonName("Deimos");
+        TestRunner.homePage.addingMoonName("Phobos");
         TestRunner.homePage.addingMoonImage(System.getenv("MOON_PHOTO"));
         TestRunner.homePage.addingPlanetID("2");
         TestRunner.homePage.pressSubmitButton();
@@ -103,7 +103,7 @@ public class PlanetandMoonVisibilitySteps {
         Assert.assertEquals("Mars",TestRunner.homePage.getTableRows().get(1).getName());
         Assert.assertEquals("Luna",TestRunner.homePage.getTableRows().get(2).getName());
         Assert.assertEquals("Titan",TestRunner.homePage.getTableRows().get(3).getName());
-        Assert.assertEquals("Deimos",TestRunner.homePage.getTableRows().get(4).getName());
+        Assert.assertEquals("Phobos",TestRunner.homePage.getTableRows().get(4).getName());
         Assert.assertEquals("moon",TestRunner.homePage.getTableRows().get(4).getCelestialType());
         Assert.assertEquals(2,TestRunner.homePage.getTableRows().get(4).getOwnerId());
     }
@@ -111,7 +111,7 @@ public class PlanetandMoonVisibilitySteps {
     @When("User's performs a successful Moon deletion operation with the inputted data")
     public void userSPerformsASuccessfulMoonDeletionOperationWithTheInputtedData() {
         TestRunner.homePage.changeToMoon();
-        TestRunner.homePage.deleteCelestial("Deimos");
+        TestRunner.homePage.deleteCelestial("Phobos");
     }
 
     @Then("User's planets and moons should be visible, excluding the deleted planet and its moons")
