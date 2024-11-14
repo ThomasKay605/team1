@@ -14,8 +14,8 @@ Feature: UserLogin
 
 	Examples: 
 		| Host                   | Username | Password       | Authenticated     | Redirected     |
-		| https://localhost:8080 | Batman   | I am the night | authenticated     | redirected     |
-		| https://localhost:8080 | (empty)  | I am the night | not authenticated | not redirected |
+		| localhost:8080 | Batman   | I am the night | authenticated     | redirected     |
+		| localhost:8080 | (empty)  | I am the night | not authenticated | not redirected |
 
 	@PLAN-TC-39 @JREQ-PLAN-10 @AIO-FOLDER-Automated/User_Login
 	Scenario Outline: User Login: Valid username and password validate user to home page
@@ -29,10 +29,10 @@ Feature: UserLogin
 
 	Examples: 
 		| Host                   | Username | Password       | Authenticated     | Redirected     |
-		| https://localhost:8080 | Batman   | I am the night | authenticated     | redirected     |
-		| https://localhost:8080 | Batman   | Clown prince   | not authenticated | not redirected |
-		| https://localhost:8080 | Joker    | I am the night | not authenticated | not redirected |
-		| https://localhost:8080 | Joker    | Clown prince   | not authenticated | not redirected |
+		| localhost:8080 | Batman   | I am the night | authenticated     | redirected     |
+		| localhost:8080 | Batman   | Clown prince   | not authenticated | not redirected |
+		| localhost:8080 | Joker    | I am the night | not authenticated | not redirected |
+		| localhost:8080 | Joker    | Clown prince   | not authenticated | not redirected |
 
 	@PLAN-TC-40 @JREQ-PLAN-10 @AIO-FOLDER-Automated/User_Login
 	Scenario Outline: User Login: User can access their home page when previously logged in via session data
@@ -49,5 +49,5 @@ Feature: UserLogin
 
 	Examples: 
 		| Host                   | Username | Password       | Authenticated     | Redirected     | Home Page                          | On Home Page         |
-		| https://localhost:8080 | Batman   | I am the night | authenticated     | redirected     | https://localhost:8080/planetarium | on the home page     |
-		| https://localhost:8080 | (empty)  | (empty)        | not authenticated | not redirected | https://localhost:8080/planetarium | not on the home page |
+		| localhost:8080 | Batman   | I am the night | authenticated     | redirected     | localhost:8080/planetarium | on the home page     |
+		| localhost:8080 | (empty)  | (empty)        | not authenticated | not redirected | localhost:8080/planetarium | not on the home page |
