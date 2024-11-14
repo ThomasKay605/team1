@@ -12,7 +12,7 @@ import javax.swing.*;
 
 public class MoonCreationSteps {
 
-    private final String NO_ALERT = "(no alert, table refresh)";
+    private static final String NO_ALERT = "(no alert, table refresh)";
 
     /**
      * Many steps return a docstring that's like <code>moonName, planetID</code>.
@@ -111,9 +111,10 @@ public class MoonCreationSteps {
             String expected = "Failed to create Moon orbiting planet " + getPlanetIDFromDocString(docString) +
                     " with name " + getMoonNameFromDocString(docString);
             try {
-                Assert.assertSame(expected, TestRunner.homePage.getAlertText());
+                Assert.assertEquals(expected, TestRunner.homePage.getAlertText());
+                TestRunner.homePage.closeAlert();
             }
-            catch (TimeoutException e){
+            catch (TimeoutException e) {
                 Assert.fail("No alert created when expected with ");
             }
         }
@@ -131,6 +132,7 @@ public class MoonCreationSteps {
             Assert.fail("Failed to parse planet id from doc string <" + docString + ">.");
             return;
         }
-        Assert.assertTrue(TestRunner.homePage.confirmMoon(moonName));
+        // JOptionPane.showMessageDialog(null, moonName + "\n<" + String.valueOf(planetID) + ">");
+        Assert.assertTrue(TestRunner.homePage.confirmMoon(moonName, planetID));
     }
 }

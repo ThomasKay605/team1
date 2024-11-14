@@ -11,7 +11,7 @@ import org.openqa.selenium.TimeoutException;
 
 
 public class MoonDeletionSteps {
-    private final String NO_ALERT = "(no alert, table refresh)";
+    private static final String NO_ALERT = "(no alert, table refresh)";
     /**
      * Given the user is "Batman" and is on the homepage
      */

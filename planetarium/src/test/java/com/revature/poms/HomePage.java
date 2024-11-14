@@ -18,6 +18,8 @@ import com.revature.model.CelestialBody;
 import com.revature.model.CelestialType;
 import com.revature.TestRunner;
 
+import javax.swing.*;
+
 // Good enough for now
 public class HomePage {
     
@@ -156,8 +158,8 @@ public class HomePage {
     public boolean confirmPlanet(String celestialName){
         List <WebElement> table = driver.findElements(By.xpath("//*[@id='celestialTable']/tbody/tr[position()>1]" ));
         for (WebElement row : table){
-            if(row.findElement(By.xpath("//td[3]")).getText().equals(celestialName)&&
-                    row.findElement(By.xpath("//td[1]")).getText().equals("planet")){
+            if(row.findElement(By.xpath("td[3]")).getText().equals(celestialName)&&
+                    row.findElement(By.xpath("td[1]")).getText().equals("planet")){
                 return true;
             }
         }
@@ -167,8 +169,8 @@ public class HomePage {
     public boolean confirmMoon(String celestialName){
         List <WebElement> table = driver.findElements(By.xpath("//*[@id='celestialTable']/tbody/tr[position()>1]" ));
         for (WebElement row : table){
-            if(row.findElement(By.xpath("//td[3]")).getText().equals(celestialName)&&
-                    row.findElement(By.xpath("//td[1]")).getText().equals("moon")){
+            if(row.findElement(By.xpath("td[3]")).getText().equals(celestialName)&&
+                    row.findElement(By.xpath("td[1]")).getText().equals("moon")){
                 return true;
             }
         }
@@ -183,14 +185,17 @@ public class HomePage {
      * @return boolean whether a Moon with the parameters exists in the table
      */
     public boolean confirmMoon(String celestialName, int planetID){
+        driver.navigate().refresh();
         List <WebElement> table = driver.findElements(By.xpath("//*[@id='celestialTable']/tbody/tr[position()>1]" ));
+
         for (WebElement row : table){
             if (
-                    row.findElement(By.xpath("//td[3]")).getText().equals(celestialName)   &&
-                    row.findElement(By.xpath("//td[1]")).getText().equals("moon")          &&
-                    row.findElement(By.xpath("//td[4]")).getText().equals(String.valueOf(planetID)) ){
+                    row.findElement(By.xpath("td[3]")).getText().equals(celestialName)   &&
+                    row.findElement(By.xpath("td[1]")).getText().equals("moon")          &&
+                    row.findElement(By.xpath("td[4]")).getText().equals(String.valueOf(planetID)) ){
                 return true;
             }
+
         }
         return false;
     }
@@ -198,8 +203,8 @@ public class HomePage {
     public boolean confirmOrbitPlanet(String celestialName, int planetID){
         List <WebElement> table = driver.findElements(By.xpath("//*[@id='celestialTable']/tbody/tr[position()>1]" ));
         for (WebElement row : table){
-            if(row.findElement(By.xpath("//td[3]")).getText().equals(celestialName)&&
-                    row.findElement(By.xpath("//td[4]")).getText().equals(String.valueOf(planetID))){
+            if(row.findElement(By.xpath("td[3]")).getText().equals(celestialName)&&
+                    row.findElement(By.xpath("td[4]")).getText().equals(String.valueOf(planetID))){
                 return true;
             }
         }
