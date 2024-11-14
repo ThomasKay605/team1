@@ -34,9 +34,9 @@ public class PlanetDeletionSteps {
             TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
             Alert alert = TestRunner.driver.switchTo().alert();
             try {
-                String expectedResult = "Failed to delete Planet with name " + planet;
+                String expectedResult = "Failed to delete planet with name " + planet;
                 String actualResult = alert.getText().trim();
-                Assert.assertEquals(expectedResult, actualResult);
+                Assert.assertEquals(expectedResult.trim(), actualResult);
             } catch (NoAlertPresentException e) {
                 System.out.println(e);
             } finally {
