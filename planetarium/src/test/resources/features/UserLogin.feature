@@ -13,7 +13,7 @@ Feature: UserLogin
 		And The user should be "<Redirected>" to their home page
 
 	Examples: 
-		| Host                   | Username | Password       | Authenticated     | Redirected     |
+		| Host           | Username | Password       | Authenticated     | Redirected     |
 		| localhost:8080 | Batman   | I am the night | authenticated     | redirected     |
 		| localhost:8080 | (empty)  | I am the night | not authenticated | not redirected |
 
@@ -28,7 +28,7 @@ Feature: UserLogin
 		And The user should be "<Redirected>" to their home page
 
 	Examples: 
-		| Host                   | Username | Password       | Authenticated     | Redirected     |
+		| Host           | Username | Password       | Authenticated     | Redirected     |
 		| localhost:8080 | Batman   | I am the night | authenticated     | redirected     |
 		| localhost:8080 | Batman   | Clown prince   | not authenticated | not redirected |
 		| localhost:8080 | Joker    | I am the night | not authenticated | not redirected |
@@ -48,6 +48,6 @@ Feature: UserLogin
 		Then The user should be "<On Home Page>" with "<Username>"
 
 	Examples: 
-		| Host                   | Username | Password       | Authenticated     | Redirected     | Home Page                          | On Home Page         |
+		| Host           | Username | Password       | Authenticated     | Redirected     | Home Page                  | On Home Page         |
 		| localhost:8080 | Batman   | I am the night | authenticated     | redirected     | localhost:8080/planetarium | on the home page     |
 		| localhost:8080 | (empty)  | (empty)        | not authenticated | not redirected | localhost:8080/planetarium | not on the home page |
