@@ -119,13 +119,14 @@ public class MoonCreationSteps {
                 homePage.closeAlert();
             }
             catch (TimeoutException e) {
-                Assert.fail("No alert created when expected with ");
+                Assert.fail("No alert created when expected with " + docString);
             }
         }
     }
 
     @Then("the user should see that moon created is true")
     public void the_user_should_see_that_moon_created_is_true(String docString) {
+
         // Write code here that turns the phrase above into concrete actions
         String moonName = getMoonNameFromDocString(docString);
         int planetID;

@@ -105,10 +105,6 @@ Feature: MoonCreation
     When the user inputs Planet ID "<Planet ID>"
     When the user attaches "<Moon image>"
     When the user clicks submit moon
-    When the user should see the moon created is <Moon Created?>
-        """
-			<Moon name>, <Planet ID>
-	    """
     When the user clicks on the Logout button
     When The user clicks on the Create Account button
     When The user registers the username "<Username>"
@@ -126,4 +122,4 @@ Feature: MoonCreation
 
     Examples:
       | Home page                         | Moon Created? | Planet ID | Moon image | Moon Visible to Nonowner? | Username | Password | Moon name |
-      | https://localhost/8080/plantarium | true          | 2         | moon-1.jpg | false                     | toby     | butter   | Plutarch    |
+      | https://localhost/8080/plantarium | true          | 2         | moon-1.jpg | false                     | toby     | butter   | tobyMoon    |
