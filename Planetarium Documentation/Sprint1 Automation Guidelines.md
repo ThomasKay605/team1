@@ -1,26 +1,20 @@
-# JWA Capstone Project
-The Planetarium is a web application designed by Revature Space Initiative for astronomers to track celestial bodies they discover in the night sky. Development work on the application is progressing, and the company wants to capitalize on the work of the testers brought on to the project: your job this Sprint is to explore the source code of the planetarium and create Integration and Unit tests for the application. As a secondary goal, Revature Space Initiative wants your team to start development work on a DevOps pipeline to further automate the testing process
+# JWA Automation Project
+The Planetarium is a web application designed by Revature Space Initiative for astronomers to track celestial bodies they discover in the night sky. Development work on the application is progressing, and the company wants to bring in testers to improve Quality Control to further improve product quality. The company was satisfied with the manual testing done last Sprint, and they would like for you and your team to build automated versions of your previous manual tests in order to streamline the testing process. Your Job this Sprint is to build an automated test suite to perform System testing on the planetarium application
 
 ## Project Technology Focus
 - Java
 - Selenium
 - Cucumber
 - Junit
-- Mockito
 - Jira
 - Test Case Creation
 - Test Reporting
 - System Testing
-- Integration Testing
-- Unit Testing
-- DevOps
-- Jenkins
-- AWS
 
 ## Project Test Objectives
 - defect discovery
 - requirements validation
-- useability reporting
+- usability reporting
 
 ## Use Cases
 - Users should be able to open a new User account with the Planetarium
@@ -61,11 +55,8 @@ The Planetarium is a web application designed by Revature Space Initiative for a
 
 ## Test Software Requirements
 - web page information should be saved in Page Object Models for ease of refactoring and updating
-- feature files should be used to link Acceptance Criteria to code execution in order to perform End to End testing
-- A test driver class should be used to facilitate the End to End testing
-- the application API should be tested with a third party API testing tool
-- the application service layer should have unit and integration tests developed for it using Junit and Mockito
-- the application repository layer should have unit tests developed for it using Junit
+- feature files should be used to link Gherkin Acceptance Criteria to code execution in order to perform End to End testing
+- A test runner class should be used to facilitate the End to End testing
 
 ## Defect Report Requirements
 - All Defect Reports should include the following information
@@ -74,58 +65,44 @@ The Planetarium is a web application designed by Revature Space Initiative for a
     - associated Test Object
     - associated Test Data
 
-## DevOps requirements (STRETCH GOAL)
-- a Jenkins instance needs to be set up to facilitate a test pipeline for the Planetarium
-- the project repository needs to be configured to ping the Jenkins instance when the main branch is updated
-- upon updating the remote repo, Jenkins should trigger the configured job
-
-## MVP goals
+## MVP Goals
 - All previous manual tests for System testing are automated
-- Requirement Traceability Matrix contains the Acceptance Criteria
-- Acceptance Criteria are created for Use Cases
+- Requirement Traceability Matrix contains Cucumber Acceptance Criteria
+- Cucumber Acceptance Criteria are created for Use Cases
 - Test Cases are saved in Jira
 - Automated Tests are complete
-- System, Integration, and Unit testing is automated with Java using Selenium, Cucumber, Mockito, and Junit
 - Test Results are saved in Jira
 - Defect Reports are created for each failed test
 - Defect Reports are saved in Jira
-- all reporting is stored in Jira
-
-## DevOps requirements (STRETCH GOAL)
-- a Jenkins instance needs to be set up to facilitate a test pipeline for the Planetarium
-- the project repository needs to be configured to ping the Jenkins instance when the main branch is updated
-- upon updating the remote repo, Jenkins should trigger the configured job
 
 ## Suggested Stretch Goals
-- perform extra Exploratory Testing
+- perform extra Error Guess Testing
 - perform Non-Functional System testing
 - perform extra Acceptance Testing
-- set up a DevOps pipeline
-- configure the planetarium to run in the cloud
-- fix defects
-- continue development on the Planetarium
 
-## Order of Operations: Third Sprint
+## Order of Operations: Second Sprint
 
 ### 1. Requirement Analysis
 **Entry Criteria:**
 - Requirements document is available
 - Stakeholder is available for clarification
-- Test Results from the second sprint are available
+- Test Results from the first sprint are available
 
 **Exit Criteria:**
 - Requirements are understood
 - Acceptance Criteria updated
 - RTM updated with new requirements
+- Test Results are aggregated
+- Defect Reports are aggregated
 
 ### 2. Test Planning
 **Entry Criteria:**
 - Updated RTM is available
-- Results from the second sprint analyzed
+- Results from the first sprint analyzed
 
 **Exit Criteria:**
 - Test plan documentation is updated
-- Integration and unit testing strategy is defined
+- Automation strategy is defined
 
 ### 3. Test Case Development
 **Entry Criteria:**
@@ -133,9 +110,8 @@ The Planetarium is a web application designed by Revature Space Initiative for a
 - RTM is up to date
 
 **Exit Criteria:**
-- Automated integration and unit test cases are written and reviewed
+- Automated test cases are written and reviewed
 - Test data is prepared
-- Previous test cases are updated based on second sprint results
 
 ### 4. Test Environment Setup
 **Entry Criteria:**
@@ -144,7 +120,7 @@ The Planetarium is a web application designed by Revature Space Initiative for a
 - Setup resources are available
 
 **Exit Criteria:**
-- Test environment is configured for integration and unit testing
+- Test environment is configured
 - Automated smoke tests all pass
 
 ### 5. Test Execution
@@ -153,7 +129,7 @@ The Planetarium is a web application designed by Revature Space Initiative for a
 - Test environment passes automated smoke tests
 
 **Exit Criteria:**
-- Automated integration and unit test cases are executed
+- Automated test cases are executed
 - Defects are logged in Jira
 - Test results are documented in Jira
 
@@ -188,6 +164,8 @@ The Planetarium is a web application designed by Revature Space Initiative for a
 ## Git Practices
 - **Protect Main Branch**:
   - Prevent direct pushes to avoid breaking changes
+- **Enforce Code Reviews**
+  - require 1 or 2 reviewers for all pull requests in Github
 - **Branching Strategy**:
   - Standard naming convention for clarity
   - Define frequency for adds and commits
