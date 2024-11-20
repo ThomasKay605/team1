@@ -1,6 +1,7 @@
 package com.revature.steps;
 
 import com.revature.TestRunner;
+import com.revature.model.CelestialBody;
 import com.revature.poms.HomePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -8,8 +9,15 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Given;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+
+import java.time.Duration;
 
 import static com.revature.TestRunner.driver;
 import static com.revature.TestRunner.homePage;
@@ -79,6 +87,7 @@ public class MoonCreationSteps {
      */
     @When("the user clicks submit moon")
     public void theUserClicksSubmitMoon() {
+
         homePage.pressSubmitButton();
     }
 
@@ -137,7 +146,12 @@ public class MoonCreationSteps {
             Assert.fail("Failed to parse planet id from doc string <" + docString + ">.");
             return;
         }
-        Assert.assertTrue(homePage.confirmMoon(moonName, planetID));
+        for (CelestialBody cb : homePage.getTableRows()){
+            if (cb.getName().equals(moonName) && cb.getOwnerId() == planetID && cb.getCelestialType().equals("moon"))
+                return;
+        }
+        Assert.fail("No moon <" + moonName + "> with owner " + planetID);
+
     }
 
     @Then("the user should see that moon created is false")
@@ -183,6 +197,7 @@ public class MoonCreationSteps {
 
     @When("the user acknowledges the account creation alert")
     public void theUserAcknowledgesTheAccountCreationAlert() {
+        TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }
 
@@ -191,7 +206,8 @@ public class MoonCreationSteps {
         Assert.assertEquals(TestRunner.driver.getCurrentUrl(), HomePage.HOME_URL);
     }
 
-    @And("the user should see that the moon {string} visibility is <Moon Visible to Nonowner?>")
-    public void theUserShouldSeeThatTheMoonVisibilityIsMoonVisibleToNonowner(String arg0) {
+    @Then("the user should see that the moon {string} visibility is false")
+    public void the_user_should_see_that_the_moon_visibility_is_false(String moonName, String docString) {
+        Assert.assertFalse(homePage.confirmMoon(moonName));
     }
 }

@@ -109,6 +109,7 @@ Feature: MoonCreation
     When The user clicks on the Create Account button
     When The user registers the username "<Username>"
     When The user registers the password "<Password>"
+    When The user clicks on the Create button
     When the user acknowledges the account creation alert
     When The user is on the login page
     When The user inputs username "<Username>"
@@ -117,7 +118,7 @@ Feature: MoonCreation
     Then The user should be redirected to homepage
     And the user should see that the moon "<Moon name>" visibility is <Moon Visible to Nonowner?>
 		"""
-			<Moon name>, <Planet ID>
+			<Planet ID>
 		"""
 
     Examples:
