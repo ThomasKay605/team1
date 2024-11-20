@@ -2,6 +2,7 @@ package com.revature.planetarium.utility;
 
 import com.revature.planetarium.controller.MoonController;
 import com.revature.planetarium.controller.PlanetController;
+import com.revature.planetarium.controller.TestController;
 import com.revature.planetarium.controller.UserController;
 import com.revature.planetarium.controller.ViewController;
 import com.revature.planetarium.exceptions.AuthenticationFailed;
@@ -35,6 +36,9 @@ public class JavalinSetup {
     final public static MoonController moonController = new MoonController(moonService);
 
     final public static ViewController viewController = new ViewController();
+
+    // Test Controller -- comment out before shipping
+    final public static TestController testController = new TestController();
 
     public static void mapRoutes(Javalin app){
 
@@ -88,6 +92,12 @@ public class JavalinSetup {
         app.get("/planetarium/moon/{identifier}", moonController::findByIdentifier);
         app.post("/planetarium/moon", moonController::createMoon);
         app.delete("/planetarium/moon/{identifier}", moonController::deleteMoon);
+
+        /*
+         * Mapping database resetting for API Testing
+         * Delete or comment out when shipped out 
+         */
+        app.get("/reset", testController::resetDatabase);
     }
     
 }
