@@ -1,16 +1,115 @@
 package com.revature.planetarium.service.user;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
+import com.revature.planetarium.entities.User;
+import com.revature.planetarium.exceptions.UserFail;
+import com.revature.planetarium.repository.user.UserDao;
+
+import java.util.Optional;
+
+import org.junit.Assert;
+import org.junit.Before;
 
 public class UserServiceTest {
 
-    @Test
-    public void createUser() {
+    private static final String GOOD_USERNAME = "The Long Quiet";
+    private static final String GOOD_PASSWORD = "Slay the princess";
+    private static final String EXISTING_USERNAME = "Batman";
+
+    private static UserService userService;
+    private static UserDao userDao;
+    private static User testUser;
+
+    @Before
+    public void setupForEachTest() {
+        userDao = Mockito.mock(UserDao.class);
+        userService = new UserServiceImp(userDao);
+        testUser = new User();
+        testUser.setUsername(GOOD_USERNAME);
+        testUser.setPassword(GOOD_PASSWORD);
     }
 
     @Test
-    public void authenticate() {
+    public void positiveCreateUserTest() {
+        Mockito.when(userDao.createUser(testUser)).thenReturn(Optional.of(testUser));
+        Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
+            Optional.empty());
+        String expectedMessage = "Created user with username " + GOOD_USERNAME + " and password " +
+            GOOD_PASSWORD;
+        String actualMessage = userService.createUser(testUser);
+        Assert.assertEquals(expectedMessage, actualMessage);
     }
+
+    @Test
+    public void negativeCreateUserTestUsernameLength0() {
+        testUser.setUsername("");
+        Assert.assertThrows(UserFail.class, () -> {
+            userService.createUser(testUser);
+        });
+    }
+
+    @Test
+    public void negativeCreateUserTestUsernameLength31() {
+        testUser.setUsername("The pristine blade is gleaming!");
+        Assert.assertThrows(UserFail.class, () -> {
+            userService.createUser(testUser);
+        });
+    }
+
+    @Test
+    public void negativeCreateUserTestPasswordLength0() {
+        testUser.setPassword("");
+        Assert.assertThrows(UserFail.class, () -> {
+            userService.createUser(testUser);
+        });
+    }
+
+    @Test
+    public void negativeCreateUserTestPasswordLength31() {
+        testUser.setPassword("Slay, not romance the princess!");
+        Assert.assertThrows(UserFail.class, () -> {
+            userService.createUser(testUser);
+        });
+    }
+
+    @Test
+    public void negativeCreateUserTestDuplicateUsername() {
+        testUser.setUsername(EXISTING_USERNAME);
+        Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
+            Optional.of(testUser));
+        Assert.assertThrows(UserFail.class, () -> {
+            userService.createUser(testUser);
+        });
+    }
+
+    @Test
+    public void positiveAuthenticateTest() {
+        Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
+            Optional.of(testUser));
+        User actualUser = userService.authenticate(testUser);
+        Assert.assertEquals(testUser, actualUser);
+    }
+
+    @Test
+    public void negativeAuthenticateTestWrongUsername() {
+        Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
+            Optional.empty());
+        Assert.assertThrows(UserFail.class, () -> {
+            userService.authenticate(testUser);
+        }); 
+    }
+
+    @Test
+    public void negativeAuthenticateTestWrongPassword() {
+        User returnedUser = new User();
+        returnedUser.setPassword("The cycle never ends");
+        Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
+            Optional.of(returnedUser));
+        Assert.assertThrows(UserFail.class, () -> {
+            userService.authenticate(testUser);
+        });
+    }
+
 }
