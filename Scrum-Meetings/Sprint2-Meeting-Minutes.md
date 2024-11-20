@@ -16,3 +16,22 @@ work by features.
 **Blockers**: Team occupied with client interviews
 
 ### *Tuesday, November 19th, 2024*
+
+**Accomplishments**: Finished Test Strategies documentation, timeline document, JIRA board for current sprint, and skeleton 
+for unit tests together
+
+**Discussion**: Discussed the product's MVP requirements and what files we need to test in order to get to that point. We also 
+did a mini sprint retrospective in order to plan our current timeline with more realistic goals. II organized the repo 
+and added the source code. TK updated the pom.xml to include new dependencies for the current sprint. MF drove the peer programming today.
+
+**Blockers**: Our understanding of the current project was a bit lacking, but this has been cleared up
+
+**Goal**: Finish our test case writing by Monday, November 25th
+
+**Moving Forward**:
+- TK: User controller, repository, and DAO
+- HN: View controller
+- II: Planet controller, repository, and DAO + fixing automation tests
+- MF: Moon controller, repository, and DAO
+
+### *Wednesday, November 20th, 2024*
