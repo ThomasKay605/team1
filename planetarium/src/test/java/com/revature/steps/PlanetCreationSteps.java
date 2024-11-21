@@ -7,10 +7,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Given;
 import org.junit.Assert;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -29,6 +26,8 @@ public class PlanetCreationSteps {
         TestRunner.loginPage.inputUsername(username);
         TestRunner.loginPage.inputPassword(password);
         TestRunner.loginPage.login();
+        WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(2));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("greeting")));
     }
 
     // **********SHARED WITH PLANET DELETE********** //
@@ -125,7 +124,7 @@ public class PlanetCreationSteps {
 
         if(result.equals("Planet is created and the user's table is refreshed to display new planet")) {
             String path = "//td[text()='" + planet + "']";
-            WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(3));
+            WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(5));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
             boolean actual = TestRunner.homePage.confirmPlanet(planet);
             Assert.assertTrue(actual);
@@ -150,25 +149,22 @@ public class PlanetCreationSteps {
 
     @Then("The user should see a result {string} reflected from adding a Planet {string} with an image")
     public void the_user_should_see_a_result_reflected_from_adding_a_Planet_with_an_image(String result, String planet, String docString) {
-        String path = "//td[text()='" + planet + "']";
-        WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
-
-        List<CelestialBody> list = TestRunner.homePage.getTableRows();
-        CelestialBody created = null;
-        boolean found = false;
-        for(CelestialBody c : list) {
-            if(c.getName().equals(planet)) {
-                created = c;
+//        try {
+            String path = "//td[text()='" + planet + "']";
+            WebDriverWait wait = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(5));
+            try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
+            } catch (TimeoutException e) {
+                Assert.fail("Failure to find image");
             }
-        }
-        try {
-            if(!found) {
-                throw new NotFoundException();
+
+            List<CelestialBody> list = TestRunner.homePage.getTableRows();
+            CelestialBody created = null;
+            for(CelestialBody c : list) {
+                if(c.getName().equals(planet)) {
+                    created = c;
+                }
             }
             Assert.assertEquals(created.getName(), planet);
-        } catch (NotFoundException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }
