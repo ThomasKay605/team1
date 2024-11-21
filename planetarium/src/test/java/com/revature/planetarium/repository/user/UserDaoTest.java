@@ -1,12 +1,14 @@
 package com.revature.planetarium.repository.user;
 
 import com.revature.planetarium.entities.User;
+import com.revature.planetarium.exceptions.UserFail;
 import com.revature.utility.Setup;
 
 import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.After;
 
@@ -14,103 +16,95 @@ public class UserDaoTest {
 
     private static final String GOOD_USERNAME = "Robin";
     private static final String GOOD_PASSWORD = "BatmanAndRobinRocks";
+    private static final String EXISTING_USERNAME = "Batman";
 
     private static UserDao userDao;
+    private static User testUser;
 
     @BeforeClass
     public static void setup() {
         userDao = new UserDaoImp();
         Setup.main(new String[]{});
-        System.out.println("BeforeClass has been executed");
+    }
+
+    @Before
+    public void setupForEachTest() {
+        testUser = new User();
+        testUser.setUsername(GOOD_USERNAME);
+        testUser.setPassword(GOOD_PASSWORD);
     }
 
     @After
-    public void teardownForEachest() {
+    public void teardownForEachTest() {
         Setup.main(new String[]{});
-        System.out.println("After has been executed");
     }
 
     @Test
     public void positiveCreateUserTest() {
-        User expectedUser = new User();
-        expectedUser.setUsername(GOOD_USERNAME);
-        expectedUser.setPassword(GOOD_PASSWORD);
-        Optional<User> option = userDao.createUser(expectedUser);
+        Optional<User> option = userDao.createUser(testUser);
         if(option.isPresent()) {
             User actualUser = option.get();
-            expectedUser.setId(actualUser.getId());
-            Assert.assertEquals(expectedUser, actualUser);
-        } else Assert.fail("User is supposed to be created");
+            testUser.setId(actualUser.getId());
+            Assert.assertEquals(testUser, actualUser);
+        } else Assert.fail("Option should have a user present");
     }
 
-    // Keep or delete?
     @Test
     public void negativeCreateUserTestUsernameLength0() {
-        User invalidUser = new User();
-        invalidUser.setUsername("");
-        invalidUser.setPassword(GOOD_PASSWORD);
-        Optional<User> option = userDao.createUser(invalidUser);
-        Assert.assertTrue(option.isEmpty());
+        testUser.setUsername("");
+        Assert.assertThrows(UserFail.class, () -> {
+            userDao.createUser(testUser);
+        });
     }
 
     @Test
     public void negativeCreateUserTestUsernameLength31() {
-        User invalidUser = new User();
-        invalidUser.setUsername("IHaveTheTwoBestDogsInTheWorld!!");
-        invalidUser.setPassword(GOOD_PASSWORD);
-        Optional<User> option = userDao.createUser(invalidUser);
-        Assert.assertTrue(option.isEmpty());
+        testUser.setUsername("IHaveTheTwoBestDogsInTheWorld!!");
+        Assert.assertThrows(UserFail.class, () -> {
+            userDao.createUser(testUser);
+        });
     }
 
-    // Keep or delete?
     @Test
     public void negativeCreateUserTestPasswordLength0() {
-        User invalidUser = new User();
-        invalidUser.setUsername(GOOD_USERNAME);
-        invalidUser.setPassword("");
-        Optional<User> option = userDao.createUser(invalidUser);
-        Assert.assertTrue(option.isEmpty());
+        testUser.setPassword("");
+        Assert.assertThrows(UserFail.class, () -> {
+            userDao.createUser(testUser);
+        });
     }
 
     @Test
     public void negativeCreateUserTestPasswordLength31() {
-        User invalidUser = new User();
-        invalidUser.setUsername(GOOD_USERNAME);
-        invalidUser.setPassword("ICannotThinkOfAGoodPassword1234");
-        Optional<User> option = userDao.createUser(invalidUser);
-        Assert.assertTrue(option.isEmpty());
+        testUser.setPassword("ICannotThinkOfAGoodPassword1234");
+        Assert.assertThrows(UserFail.class, () -> {
+            userDao.createUser(testUser);
+        });
     }
 
     @Test
     public void negativeCreateUserTestDuplicateUsername() {
-        User duplicate = new User();
-        duplicate.setUsername("Batman");
-        duplicate.setPassword(GOOD_PASSWORD);
-        Optional<User> option = userDao.createUser(duplicate);
-        Assert.assertTrue(option.isEmpty());
+        testUser.setUsername(EXISTING_USERNAME);
+        Assert.assertThrows(UserFail.class, () -> {
+            userDao.createUser(testUser);
+        });
     }
 
     @Test
     public void positiveFindUserByUsernameTest() {
-        User expectedUser = new User();
-        String username = "Batman";
-        expectedUser.setUsername(username);
-        expectedUser.setPassword("I am the night");
-        Optional<User> option = userDao.findUserByUsername(username);
+        testUser.setUsername(EXISTING_USERNAME);
+        testUser.setPassword("I am the night");
+        Optional<User> option = userDao.findUserByUsername(EXISTING_USERNAME);
         if(option.isPresent()) {
             User actualUser = option.get();
-            expectedUser.setId(actualUser.getId());
-            Assert.assertEquals(expectedUser, actualUser);
-        } else Assert.fail("User is supposed to be found");
+            testUser.setId(actualUser.getId());
+            Assert.assertEquals(testUser, actualUser);
+        } else Assert.fail("Option should have a user present");
     }
 
     @Test
     public void negativeFindUserByUsernameTest() {
-        String username = "Joker";
-        Optional<User> option = userDao.findUserByUsername(username);
+        Optional<User> option = userDao.findUserByUsername("Joker");
         Assert.assertTrue(option.isEmpty());
     }
-
-
 
 }
