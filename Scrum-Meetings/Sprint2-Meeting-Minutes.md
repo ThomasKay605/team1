@@ -35,3 +35,27 @@ and added the source code. TK updated the pom.xml to include new dependencies fo
 - MF: Moon controller, repository, and DAO
 
 ### *Wednesday, November 20th, 2024*
+**Discussion**: Discuss progress on unit tests
+- TK: Need to rework Junit tests for User Dao and Service; 
+did not implement changes yet to User Registration/Login steps; need to learn more about Postman testing
+- HN: Work on the viewer controller, learn API response data in Postman
+- MF: Continuing work on implementing unit tests for moon creation/deletion
+- II: Finish up automation testing in order to proceed with unit testing
+
+**Blockers**: QC tomorrow which is taking time away from the project
+
+### *Thursday, November 21th, 2024*
+**Discussion**: More discussion on unit tests
+- TK: Reworked Junit tests for UserDao and UserService; spent studying for QC
+- HN: Continuing to work on View Controller Testing, and learning how to API testing with Postman
+- MF: Working on adding more tests and converting images to string
+- II: Automation testing finished for planet creation + deletion; start working on unit tests
+
+**Blockers**: illness + QC anxiety
+
+### *Friday, November 22th, 2024*
+**Discussion**: Discussed when and where to use Mockito + our progression on integration and unit testing
+- II: working on planetDAOtests; blockers - mockito understanding on if to mock the actual DB
+- HN: working on script testing for planet visibility requirement; blockers - script writing
+- MF: finished working on MoonDAOTests; next will be working on the service layer; blockers - mockito when / where
+- TK: fixed cucumber steps for user login / registration; working on script writing; blockers - Postman documentation
