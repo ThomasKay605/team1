@@ -36,8 +36,7 @@ public class UserServiceTest {
         Mockito.when(userDao.createUser(testUser)).thenReturn(Optional.of(testUser));
         Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
             Optional.empty());
-        String expectedMessage = "Created user with username " + GOOD_USERNAME + " and password " +
-            GOOD_PASSWORD;
+        String expectedMessage = "Created user with username " + GOOD_USERNAME;
         String actualMessage = userService.createUser(testUser);
         Assert.assertEquals(expectedMessage, actualMessage);
     }
