@@ -3,9 +3,13 @@ package com.revature.steps;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.time.Duration;
+
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.revature.TestRunner;
 import com.revature.poms.LoginPage;
@@ -68,10 +72,14 @@ public class UserRegistrationSteps {
     @Then("The user should be {string} back to the login page")
     public void the_user_should_be_back_to_the_login_page(String redirected) {
         boolean isRedirected = (redirected.equals("redirected")) ? true : false;
-        if(isRedirected) {
-            Assert.assertEquals(LoginPage.TITLE, TestRunner.driver.getTitle());
-        } else {
-            Assert.assertEquals(RegistrationPage.TITLE, TestRunner.driver.getTitle());
+        WebDriverWait titleChange = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(2));
+        try {
+            titleChange.until(ExpectedConditions.titleIs(LoginPage.TITLE));
+            if(isRedirected) Assert.assertEquals(LoginPage.TITLE, TestRunner.driver.getTitle());
+            else Assert.fail("User should have not been redirected to login page");
+        } catch(TimeoutException e) {
+            if(isRedirected) Assert.fail("User should have been redirected to login page");
+            else Assert.assertEquals(RegistrationPage.TITLE, TestRunner.driver.getTitle());
         }
 
     }
