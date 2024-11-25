@@ -1,21 +1,24 @@
 package com.revature.planetarium.repository.planet;
 
 import com.revature.planetarium.entities.Planet;
+import com.revature.planetarium.exceptions.PlanetFail;
 import com.revature.utility.Setup;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OptionalDataException;
 import java.nio.file.Files;
 import java.util.*;
 
 public class PlanetDaoTest {
+
+    public static final String NON_UNIQUE_NAME = "Mars";
+    public static final String PATH_FILE_JPG = "PLANET_PATH";
+    public static final String PATH_FILE_PNG = "PLANET_PATH_PNG";
+    public static final int PLANET_OWNER_ID = 1;
 
     private Planet planet;
     private PlanetDaoImp testClass;
@@ -26,19 +29,10 @@ public class PlanetDaoTest {
     }
 
     @Before
-    public void init() throws IOException {
+    public void init() {
         planet = new Planet();
-
-        try {
-            File image = new File(System.getenv("PLANET_PATH"));
-            byte[] arr = Files.readAllBytes(image.toPath());
-            String imageDataAsString = Base64.getEncoder().encodeToString(arr);
-            planet.setImageData(imageDataAsString);
-            planet.setOwnerId(1);
-        } catch(IOException e) {
-            System.out.println("Failed to create planet with image data");
-        }
-
+        planet.setImageData(convertImage(PATH_FILE_JPG));
+        planet.setOwnerId(PLANET_OWNER_ID);
         testClass = new PlanetDaoImp();
     }
 
@@ -46,18 +40,117 @@ public class PlanetDaoTest {
         planet.setPlanetName(planetName);
     }
 
-    // Also Make Negative Tests
+    public String convertImage(String file) {
+        String imageDataAsString = "";
+        try {
+            File image = new File(System.getenv(file));
+            byte[] arr = Files.readAllBytes(image.toPath());
+            imageDataAsString = Base64.getEncoder().encodeToString(arr);
+            return imageDataAsString;
+        } catch(IOException e) {
+            System.out.println("Failed to create planet with image data");
+        } catch(IllegalArgumentException e) {
+            System.out.println("Image type is not of JPG");
+        }
+        return imageDataAsString;
+    }
     @Test
     public void createPlanetPositive() {
         setPlanetName("Buster Cannon");
         try {
             Optional<Planet> actual = testClass.createPlanet(planet);
-            System.out.println(actual.get().getPlanetId());
             Assert.assertEquals(actual.get(), planet);
         } catch(Exception e) {
             Assert.fail("Failed to create planet");
         }
     }
+
+    // Use Case: Planet Character Limit Requirement
+    @Test
+    public void createPlanetNegativeEmptyPlanetName() {
+        setPlanetName("");
+        Optional<Planet> actual = testClass.createPlanet(planet);
+        Assert.assertEquals(actual.get(), Optional.empty());
+    }
+
+    @Test
+    public void createPlanetPositiveOneCharPlanetName() {
+        setPlanetName("a");
+        Optional<Planet> actual = testClass.createPlanet(planet);
+        Assert.assertEquals(actual.get(), planet);
+    }
+
+    @Test
+    public void createPlanetPositiveThirtyCharPlanetName() {
+        setPlanetName("Do not listen to the Narrator!");
+        Optional<Planet> actual = testClass.createPlanet(planet);
+        Assert.assertEquals(actual.get(), planet);
+    }
+
+    @Test
+    public void createPlanetNegativeThirtyOneCharPlanetName() {
+        setPlanetName("I am the Narrator of this story");
+        try {
+            Optional<Planet> actual = testClass.createPlanet(planet);
+            Assert.assertEquals(actual.get(), Optional.empty());
+        } catch (Exception e) {
+            Assert.fail("Is throwing a SQLiteException; should also be returning an empty Optional. Source code should be catching it");
+        }
+    }
+
+    //************************************************************************************************************//
+
+    // Use Case: Planet Unique Name Requirement
+    @Test
+    public void createPlanetPositiveUniqueName() {
+        setPlanetName("Cyndaquil");
+        Optional<Planet> actual = testClass.createPlanet(planet);
+        Assert.assertEquals(actual.get(), planet);
+    }
+
+    @Test
+    public void createPlanetNegativeNonUniqueName() {
+        setPlanetName(NON_UNIQUE_NAME);
+        Optional<Planet> actual = testClass.createPlanet(planet);
+        Assert.assertEquals(actual.get(), Optional.empty());
+    }
+
+    //************************************************************************************************************//
+
+    // Use Case: Planet Has an Optional Image Requirement
+    @Test
+    public void createPlanetWithImageTypeJPG() {
+        setPlanetName("Treeko");
+        Optional<Planet> actual = testClass.createPlanet(planet);
+        Assert.assertEquals(actual.get(), planet);
+    }
+
+    @Test
+    public void createPlanetWithImageTypePNG() {
+        try {
+            Planet p = new Planet();
+            p.setPlanetName("Grovyle");
+            p.setImageData(PATH_FILE_PNG);
+            Optional<Planet> actual = testClass.createPlanet(p);
+            Assert.assertEquals(actual.get(), p);
+        } catch (Exception e) {
+            Assert.fail("No logic on converting png to a byte array");
+        }
+    }
+
+    @Test
+    public void createPlanetWithoutImage() {
+        try {
+            Planet p = new Planet();
+            p.setPlanetName("Sceptile");
+            Optional<Planet> actual = testClass.createPlanet(p);
+            Assert.assertEquals(actual.get(), p);
+        } catch (Exception e) {
+            Assert.fail("Is throwing a SQLiteException; Should be able to create a planet without an associated image");
+        }
+    }
+
+    //************************************************************************************************************//
 
     @Test
     public void readPlanet() {
@@ -82,6 +175,9 @@ public class PlanetDaoTest {
     @Test
     public void readAllPlanets() {
         List<Planet> actualList = testClass.readAllPlanets();
+        for(Planet p : actualList) {
+            System.out.println("ID: " + p.getPlanetId() + "    Planet Name: " + p.getPlanetName());
+        }
         Assert.assertNotNull(actualList);
     }
 
@@ -112,12 +208,24 @@ public class PlanetDaoTest {
         Assert.assertTrue(testClass.deletePlanet(planetID));
     }
 
-    // Also Make Negative Tests
+    // Use Case: Planet Ownership Deletion Requirement
     @Test
-    public void testDeletePlanet() {
-        setPlanetName("Tristan");
+    public void deleteMyPlanetPositive() {
+        setPlanetName("Articuno");
         Optional<Planet> created = testClass.createPlanet(planet);
         String planetName = created.get().getPlanetName();
         Assert.assertTrue(testClass.deletePlanet(planetName));
     }
+
+    @Test
+    public void deleteYourPlanetNegative() {
+        setPlanetName("Articuno");
+        planet.setOwnerId(PLANET_OWNER_ID+1);
+        Optional<Planet> created = testClass.createPlanet(planet);
+        String planetName = created.get().getPlanetName();
+        Assert.assertThrows(PlanetFail.class, () -> testClass.deletePlanet(planetName));
+    }
+
+    //************************************************************************************************************//
+
 }
