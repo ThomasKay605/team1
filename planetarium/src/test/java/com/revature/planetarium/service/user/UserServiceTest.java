@@ -129,4 +129,16 @@ public class UserServiceTest {
         Assert.assertEquals("Username and/or password do not match", failed.getMessage());
     }
 
+    @Test
+    public void negativeAuthenticateTestWrongCredentials() {
+        testUser.setPassword("");
+        testUser.setUsername("");
+        Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
+            Optional.empty());
+        UserFail failed = Assert.assertThrows(UserFail.class, () -> {
+            userService.authenticate(testUser);
+        });
+        Assert.assertEquals("Username and/or password do not match", failed.getMessage());
+    }
+
 }
