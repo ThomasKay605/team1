@@ -3,13 +3,16 @@ package com.revature.steps;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.revature.TestRunner;
 import com.revature.poms.HomePage;
@@ -64,10 +67,14 @@ public class UserLoginSteps {
     @Then("The user should be {string} to their home page")
     public void the_user_should_be_to_their_home_page(String redirected) {
         boolean isRedirected = (redirected.equals("redirected")) ? true : false;
-        if(isRedirected) {
-            Assert.assertEquals(HomePage.TITLE, TestRunner.driver.getTitle());
-        } else {
-            Assert.assertEquals(LoginPage.TITLE, TestRunner.driver.getTitle());
+        WebDriverWait titleChange = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(2));
+        try {
+            titleChange.until(ExpectedConditions.titleIs(HomePage.TITLE));
+            if(isRedirected) Assert.assertEquals(HomePage.TITLE, TestRunner.driver.getTitle());
+            else Assert.fail("User should have not been redirected to the home page");
+        } catch(TimeoutException e) {
+            if(isRedirected) Assert.fail("User should have been redirected to the home page");
+            else Assert.assertEquals(LoginPage.TITLE, TestRunner.driver.getTitle());
         }
     }
 
@@ -107,10 +114,14 @@ public class UserLoginSteps {
     @When("The user is {string} to their home page")
     public void the_user_is_to_their_home_page(String redirected) {
         boolean isRedirected = (redirected.equals("redirected")) ? true : false;
-        if(isRedirected) {
-            Assert.assertEquals(HomePage.TITLE, TestRunner.driver.getTitle());
-        } else {
-            Assert.assertEquals(LoginPage.TITLE, TestRunner.driver.getTitle());
+        WebDriverWait titleChange = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(2));
+        try {
+            titleChange.until(ExpectedConditions.titleIs(HomePage.TITLE));
+            if(isRedirected) Assert.assertEquals(HomePage.TITLE, TestRunner.driver.getTitle());
+            else Assert.fail("User should have not been redirected to the home page");
+        } catch(TimeoutException e) {
+            if(isRedirected) Assert.fail("User should have been redirected to the home page");
+            else Assert.assertEquals(LoginPage.TITLE, TestRunner.driver.getTitle());
         }
     }
 
@@ -130,13 +141,18 @@ public class UserLoginSteps {
     public void the_user_should_be_with(String onHomePage, String username) {
         boolean isOnHomePage = (onHomePage.equals("on the home page")) ? true : false;
         if(username.equals(EMPTY)) username = "";
-        String title = TestRunner.driver.getTitle();
-        if(isOnHomePage) {
-            Assert.assertEquals(HomePage.TITLE, title);
-            String expectedHeading = "Welcome to the Home Page " + username;
-            Assert.assertEquals(expectedHeading, TestRunner.homePage.returnTitle());
-        } else {
-            Assert.assertNull(title);
+        WebDriverWait titleChange = new WebDriverWait(TestRunner.driver, Duration.ofSeconds(2));
+        try {
+            titleChange.until(ExpectedConditions.titleIs(HomePage.TITLE));
+            if(isOnHomePage) {
+                Assert.assertEquals(HomePage.TITLE, TestRunner.driver.getTitle());
+                String expectedHeading = "Welcome to the Home Page " + username;
+                Assert.assertEquals(expectedHeading, TestRunner.homePage.returnTitle());
+            } else Assert.fail("The user should have not been redirected to their home page");
+        } catch(TimeoutException e) {
+            if(isOnHomePage) Assert.fail(
+                "The user should have been redirected to their home page");
+            else Assert.assertNull(TestRunner.driver.getTitle());
         }
     }
 }
