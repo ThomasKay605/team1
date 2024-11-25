@@ -36,8 +36,7 @@ public class UserServiceTest {
         Mockito.when(userDao.createUser(testUser)).thenReturn(Optional.of(testUser));
         Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
             Optional.empty());
-        String expectedMessage = "Created user with username " + GOOD_USERNAME + " and password " +
-            GOOD_PASSWORD;
+        String expectedMessage = "Created user with username " + GOOD_USERNAME;
         String actualMessage = userService.createUser(testUser);
         Assert.assertEquals(expectedMessage, actualMessage);
     }
@@ -124,6 +123,18 @@ public class UserServiceTest {
         returnedUser.setPassword("The cycle never ends");
         Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
             Optional.of(returnedUser));
+        UserFail failed = Assert.assertThrows(UserFail.class, () -> {
+            userService.authenticate(testUser);
+        });
+        Assert.assertEquals("Username and/or password do not match", failed.getMessage());
+    }
+
+    @Test
+    public void negativeAuthenticateTestWrongCredentials() {
+        testUser.setPassword("");
+        testUser.setUsername("");
+        Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
+            Optional.empty());
         UserFail failed = Assert.assertThrows(UserFail.class, () -> {
             userService.authenticate(testUser);
         });
