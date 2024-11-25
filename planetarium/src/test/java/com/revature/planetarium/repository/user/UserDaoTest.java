@@ -50,6 +50,13 @@ public class UserDaoTest {
     }
 
     @Test
+    public void negativeCreateUserTestEmptyUser() {
+        testUser = new User();
+        Optional<User> option = userDao.createUser(testUser);
+        Assert.assertTrue(option.isEmpty());
+    }
+
+    @Test
     public void negativeCreateUserTestUsernameLength0() {
         testUser.setUsername("");
         Assert.assertThrows(UserFail.class, () -> {
