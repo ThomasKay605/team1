@@ -6,7 +6,6 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class PlanetDeletionSteps {
@@ -46,24 +45,6 @@ public class PlanetDeletionSteps {
                 // Wait for the alert to go away before proceeding
                 TestRunner.alertWait.until(ExpectedConditions.not(ExpectedConditions.alertIsPresent()));
             }
-        }
-    }
-
-    @Then("The user should expect an error to be thrown")
-    public void the_user_should_expect_an_error_to_be_thrown(String docString) {
-        try {
-            TestRunner.alertWait.until(ExpectedConditions.alertIsPresent());
-            Alert alert = TestRunner.driver.switchTo().alert();
-            String expectedResult = "Failed to delete planet with name";
-            String actualResult = alert.getText().trim();
-            Assert.assertEquals(expectedResult.trim(), actualResult);
-            alert.accept();
-        } catch (NoAlertPresentException | TimeoutException e) {
-            Assert.fail("Alert should appear");
-        } finally {
-            // Press okay to dismiss the alert
-            // Wait for the alert to go away before proceeding
-            TestRunner.alertWait.until(ExpectedConditions.not(ExpectedConditions.alertIsPresent()));
         }
     }
 }
