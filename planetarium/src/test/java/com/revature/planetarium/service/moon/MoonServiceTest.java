@@ -3,31 +3,20 @@ package com.revature.planetarium.service.moon;
 import com.revature.planetarium.entities.Moon;
 import com.revature.planetarium.exceptions.MoonFail;
 import com.revature.planetarium.repository.moon.MoonDao;
-import com.revature.planetarium.repository.moon.MoonDaoImp;
-import com.revature.utility.Setup;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
 
 public class MoonServiceTest {
 
     private MoonService<Moon> moonService;
     private MoonDao moonDao;
 
-    @Before
-    public void resetForEachTest() {
-
-    }
 
     @Test
     public void toDelete(){
