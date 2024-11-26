@@ -1,6 +1,5 @@
 package com.revature.steps;
 
-import com.revature.poms.HomePage;
 import io.cucumber.java.en.Given;
 import com.revature.TestRunner;
 import io.cucumber.java.en.Then;
