@@ -136,8 +136,10 @@ public class MoonServiceTest {
     public void invalidDataType() {
         MoonDao moonDao = Mockito.mock(MoonDao.class);
         moonService = new MoonServiceImp<>(moonDao);
-        Assert.assertThrows(MoonFail.class, () -> moonService.selectMoon(3.1415f));
-        Assert.assertThrows(MoonFail.class, () -> moonService.deleteMoon(3.1415f));
+        MoonFail moonFail = Assert.assertThrows(MoonFail.class, () -> moonService.selectMoon(3.1415f));
+        Assert.assertEquals("Identifier must be an Integer or String", moonFail.getMessage());
+        moonFail = Assert.assertThrows(MoonFail.class, () -> moonService.deleteMoon(3.1415f));
+        Assert.assertEquals("Identifier must be an Integer or String", moonFail.getMessage());
     }
 
     @Test
@@ -225,9 +227,10 @@ public class MoonServiceTest {
         Mockito.when(moonDao.readMoon(1)).thenReturn(Optional.of(moon));
         Mockito.when(moonDao.updateMoon(updatedMoon)).thenReturn(Optional.empty());
 
-        Assert.assertThrows(MoonFail.class, () -> {
+        MoonFail moonFail = Assert.assertThrows(MoonFail.class, () -> {
             moonService.updateMoon(updatedMoon);
         });
+        Assert.assertEquals("Moon not found, could not update", moonFail.getMessage());
     }
 
     @Test
@@ -247,9 +250,10 @@ public class MoonServiceTest {
         Mockito.when(moonDao.readMoon("Luna")).thenReturn(Optional.of(moon));
         Mockito.when(moonDao.updateMoon(updatedMoon)).thenReturn(Optional.empty());
 
-        Assert.assertThrows(MoonFail.class, () -> {
+        MoonFail moonFail = Assert.assertThrows(MoonFail.class, () -> {
             moonService.updateMoon(updatedMoon);
         });
+        Assert.assertEquals("Moon name must be unique, could not update", moonFail.getMessage());
     }
 
     @Test
