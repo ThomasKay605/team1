@@ -36,8 +36,7 @@ public class UserServiceTest {
         Mockito.when(userDao.createUser(testUser)).thenReturn(Optional.of(testUser));
         Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
             Optional.empty());
-        String expectedMessage = "Created user with username " + GOOD_USERNAME + " and password " +
-            GOOD_PASSWORD;
+        String expectedMessage = "Created user with username " + GOOD_USERNAME;
         String actualMessage = userService.createUser(testUser);
         Assert.assertEquals(expectedMessage, actualMessage);
     }
@@ -45,33 +44,37 @@ public class UserServiceTest {
     @Test
     public void negativeCreateUserTestUsernameLength0() {
         testUser.setUsername("");
-        Assert.assertThrows(UserFail.class, () -> {
+        UserFail failed = Assert.assertThrows(UserFail.class, () -> {
             userService.createUser(testUser);
         });
+        Assert.assertEquals("Username must be between 1 and 30 characters", failed.getMessage());
     }
 
     @Test
     public void negativeCreateUserTestUsernameLength31() {
         testUser.setUsername("The pristine blade is gleaming!");
-        Assert.assertThrows(UserFail.class, () -> {
+        UserFail failed = Assert.assertThrows(UserFail.class, () -> {
             userService.createUser(testUser);
         });
+        Assert.assertEquals("Username must be between 1 and 30 characters", failed.getMessage());
     }
 
     @Test
     public void negativeCreateUserTestPasswordLength0() {
         testUser.setPassword("");
-        Assert.assertThrows(UserFail.class, () -> {
+        UserFail failed = Assert.assertThrows(UserFail.class, () -> {
             userService.createUser(testUser);
         });
+        Assert.assertEquals("Password must be between 1 and 30 characters", failed.getMessage());
     }
 
     @Test
     public void negativeCreateUserTestPasswordLength31() {
         testUser.setPassword("Slay, not romance the princess!");
-        Assert.assertThrows(UserFail.class, () -> {
+        UserFail failed = Assert.assertThrows(UserFail.class, () -> {
             userService.createUser(testUser);
         });
+        Assert.assertEquals("Password must be between 1 and 30 characters", failed.getMessage());
     }
 
     @Test
@@ -79,9 +82,21 @@ public class UserServiceTest {
         testUser.setUsername(EXISTING_USERNAME);
         Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
             Optional.of(testUser));
-        Assert.assertThrows(UserFail.class, () -> {
+        UserFail failed = Assert.assertThrows(UserFail.class, () -> {
             userService.createUser(testUser);
         });
+        Assert.assertEquals("Username is already in use", failed.getMessage());
+    }
+
+    @Test
+    public void negativeCreateUserTestInvalidUser() {
+        Mockito.when(userDao.createUser(testUser)).thenReturn(Optional.empty());
+        Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
+            Optional.empty());
+        UserFail failed = Assert.assertThrows(UserFail.class, () -> {
+            userService.createUser(testUser);
+        });
+        Assert.assertEquals("Failed to create user, please try again", failed.getMessage());
     }
 
     @Test
@@ -96,9 +111,10 @@ public class UserServiceTest {
     public void negativeAuthenticateTestWrongUsername() {
         Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
             Optional.empty());
-        Assert.assertThrows(UserFail.class, () -> {
+        UserFail failed = Assert.assertThrows(UserFail.class, () -> {
             userService.authenticate(testUser);
-        }); 
+        });
+        Assert.assertEquals("Username and/or password do not match", failed.getMessage()); 
     }
 
     @Test
@@ -107,9 +123,22 @@ public class UserServiceTest {
         returnedUser.setPassword("The cycle never ends");
         Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
             Optional.of(returnedUser));
-        Assert.assertThrows(UserFail.class, () -> {
+        UserFail failed = Assert.assertThrows(UserFail.class, () -> {
             userService.authenticate(testUser);
         });
+        Assert.assertEquals("Username and/or password do not match", failed.getMessage());
+    }
+
+    @Test
+    public void negativeAuthenticateTestWrongCredentials() {
+        testUser.setPassword("");
+        testUser.setUsername("");
+        Mockito.when(userDao.findUserByUsername(testUser.getUsername())).thenReturn(
+            Optional.empty());
+        UserFail failed = Assert.assertThrows(UserFail.class, () -> {
+            userService.authenticate(testUser);
+        });
+        Assert.assertEquals("Username and/or password do not match", failed.getMessage());
     }
 
 }
