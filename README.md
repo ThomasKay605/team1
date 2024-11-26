@@ -16,6 +16,7 @@ The Planetarium is a web application designed by Revature Space Initiative for a
 - DevOps
 - Jenkins
 - AWS
+- Postman
 
 ## Project Test Objectives
 - defect discovery
