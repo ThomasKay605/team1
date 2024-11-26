@@ -155,6 +155,7 @@ public class HomePage {
     }
 
     public void pressSubmitButton(){
+        createButton = driver.findElement(By.className("submit-button"));
         createButton.click();
     }
 
