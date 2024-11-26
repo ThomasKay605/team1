@@ -7,23 +7,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
 public class MoonServiceTest {
 
-    private MoonService<Moon> moonService;
+    private MoonService moonService;
     private MoonDao moonDao;
-
-
-    @Test
-    public void toDelete(){
-        List<Moon> moonList = moonService.selectAllMoons();
-        //System.out.println(moonList);
-    }
-
 
     @Test
     public void createMoonWithOneCharacterName() {
@@ -95,21 +86,88 @@ public class MoonServiceTest {
     }
 
     @Test
-    public void selectMoon() {
+    public void selectMoonById() {
+        Moon moon = new Moon(1, "Luna", 1);
+        MoonDao moonDao = Mockito.mock(MoonDao.class);
+        moonService = new MoonServiceImp<> (moonDao);
+        Mockito.when(moonDao.readMoon(1)).thenReturn(Optional.of(moon));
+        try {
+            Assert.assertEquals(moon, moonService.selectMoon(1));
+        }
+        catch (Exception e){
+            Assert.fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void selectMoonByName() {
+        Moon moon = new Moon(1, "Luna", 1);
+        MoonDao moonDao = Mockito.mock(MoonDao.class);
+        moonService = new MoonServiceImp<> (moonDao);
+        Mockito.when(moonDao.readMoon("Luna")).thenReturn(Optional.of(moon));
+        try {
+            Assert.assertEquals(moon, moonService.selectMoon("Luna"));
+        }
+        catch (Exception e){
+            Assert.fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void selectMoonByInvalidId() {
+        MoonDao moonDao = Mockito.mock(MoonDao.class);
+        moonService = new MoonServiceImp<> (moonDao);
+        Mockito.when(moonDao.readMoon(10)).thenThrow(MoonFail.class);
+        Assert.assertThrows(MoonFail.class, () -> {
+            moonService.selectMoon(10);
+        });
+    }
+
+    @Test
+    public void selectMoonByInvalidName() {
+        MoonDao moonDao = Mockito.mock(MoonDao.class);
+        moonService = new MoonServiceImp<> (moonDao);
+        Mockito.when(moonDao.readMoon("This moon no exist")).thenThrow(MoonFail.class);
+        Assert.assertThrows(MoonFail.class, () -> {
+            moonService.selectMoon("This moon no exist");
+        });
     }
 
     @Test
     public void selectAllMoons() {
+        List<Moon> moonList=
+                List.of(new Moon[]{
+                        new Moon(1, "Luna", 1),
+                        new Moon(2, "Titan", 2),
+                        new Moon(3, "Minmus", 1)
+                });
+        MoonDao moonDao = Mockito.mock(MoonDao.class);
+        moonService = new MoonServiceImp<> (moonDao);
+        Mockito.when(moonDao.readAllMoons()).thenReturn(moonList);
+        try {
+            Assert.assertEquals(moonList, moonService.selectAllMoons());
+        }
+        catch (Exception e){
+            Assert.fail(e.getMessage());
+        }
     }
 
     @Test
     public void selectByPlanetId() {
-        List<Moon> expectedMoonList = new ArrayList<>();
-        expectedMoonList.add(new Moon(1, "Luna", 1));
-        Mockito.when(moonService.selectByPlanet(1)).thenReturn(expectedMoonList);
-        List<Moon> moonList = moonService.selectByPlanet(1);
-        Mockito.verify(moonDao).readMoonsByPlanet(1);
-        Assert.assertEquals(expectedMoonList, moonList);
+        List<Moon> moonList=
+                List.of(new Moon[]{
+                        new Moon(1, "Luna", 1),
+                        new Moon(3, "Minmus", 1)
+                });
+        MoonDao moonDao = Mockito.mock(MoonDao.class);
+        moonService = new MoonServiceImp<> (moonDao);
+        Mockito.when(moonDao.readMoonsByPlanet(1)).thenReturn(moonList);
+        try {
+            Assert.assertEquals(moonList, moonService.selectByPlanet(1));
+        }
+        catch (Exception e){
+            Assert.fail(e.getMessage());
+        }
     }
 
     @Test
