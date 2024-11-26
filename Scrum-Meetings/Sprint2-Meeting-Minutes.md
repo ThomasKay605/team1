@@ -54,8 +54,35 @@ did not implement changes yet to User Registration/Login steps; need to learn mo
 **Blockers**: illness + QC anxiety
 
 ### *Friday, November 22th, 2024*
-**Discussion**: Discussed when and where to use Mockito + our progression on integration and unit testing
+**Discussion**: Discussed when and where to use Mockito + our progression on integration and unit testing; peer programmed
+drived by TK to clear up any issues with Postman API Pre-Requests and Testing
+
 - II: working on planetDAOtests; blockers - mockito understanding on if to mock the actual DB
 - HN: working on script testing for planet visibility requirement; blockers - script writing
 - MF: finished working on MoonDAOTests; next will be working on the service layer; blockers - mockito when / where
 - TK: fixed cucumber steps for user login / registration; working on script writing; blockers - Postman documentation
+
+### *Monday, November 25th, 2024*
+**Discussion**: Discussed progress with the unit and integration testing
+
+- II: finished unit testing for Planet creation and deletion; starting Postman API testing
+- HN: Still working on API Scripting Test and viewer controller
+- MF: Finished Dao tests; implemented majority of tests needed for the service and controller layers for moon
+- TK: Still working on API testing (refactoring tests and learning to export tests)
+
+**Blockers**: Cumulative QC tomorrow + time management
+
+### *Tuesday, November 26th, 2024*
+**Discussion**: Discussed progress with the unit and integration testing + worked on Sprint Retrospective. MF showcased how to
+export results onto Jira. TK showcased exporting JUnit tests. Also discussed project presentation for tomorrow.
+
+- II: planet creation and deletion API testing finished, just need to push the tests to AIO and write defect reports
+- HN: finished integration for ViewController and just need to export it to AIO
+- MF: finished service tests and API tests for Moon creation and deletion + exported to Jira; still need to merge branch
+- TK: exported all tests to Jira, need to defect reports on my test cycles, need to reupload test steps for step implementations
+
+**Blockers**: Cumulative QC tomorrow + time management + surefire Maven plugin
+
+**Retrospective**: File located in Planetarium Documentation folder; exporting issues with Jira
+
+/************************************************ END OF SPRINT ****************************************************/
